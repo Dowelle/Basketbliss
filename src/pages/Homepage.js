@@ -12,6 +12,11 @@ import Question from '../assets/question.png';
 import Monitor from '../assets/monitor.png';
 import User from '../assets/user.png';
 import Order from '../assets/order.png';
+import Notification from '../assets/notification.png';
+import Shoes from '../assets/shoes-nobg.png';
+import Pants from '../assets/pants.webp';
+import Jacket from '../assets/jacket.jpg';
+import Dress from '../assets/dress1.jpg';
 
 function Homepage() {
   return (
@@ -55,10 +60,21 @@ function Homepage() {
 
         </nav>
         <div className="main-content">
-        <div>
-            <h1>Glamshades</h1>
-            <p className="link">https://fictional-spoon-p9j5r5vpqq9c6567.github.dev/</p>
-        </div>
+            <div className="link_container">
+                <h1>Glamshades</h1>
+                <p className="link">https://fictional-spoon-p9j5r5vpqq9c6567.github.dev/</p>
+            </div>
+            <div className="main-top">
+                <input type="text" placeholder="Search items..."/>
+                <img className="notif" src={Notification} alt="" />
+            </div>
+
+            <div className="featured_products">
+                <img src={Jacket} />
+                <img src={Shoes} />
+                <img src={Dress} />
+                <img src={Pants} />
+            </div>
         </div>
         <div className="stats">
             <div>

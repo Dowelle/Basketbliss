@@ -71,6 +71,44 @@ nav h1{
     text-align: center;
     border-bottom: solid 1px #d3806d;
 }
+
+.main-top{
+    display:flex;
+    justify-content: space-between;
+    padding:.5rem 1rem;
+
+    background-image: url(../assets/shoes.jpg);
+    height:30vh;
+    background-position: center;
+    background-size: cover;
+    border-radius: 0 0 20px 20px;
+}
+.main-top input{
+    border: solid 1px #d3806d;
+    border-radius: 20px;
+    padding:.5rem 1rem;
+    width:95%;
+    height:35px;
+}
+.notif{
+    width:30px;
+    height:30px;
+    background-color: #fff;
+    padding: .25rem;
+    border-radius: 50%;
+    scale:1.1;
+}
+
+.featured_products{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 1.5rem;
+}
+.featured_products img{
+    width: 170px;
+    height:170px;
+
+}
 .stats{
     padding:.5rem;
     width:25vw;
