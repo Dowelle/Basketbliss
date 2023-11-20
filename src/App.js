@@ -4,15 +4,17 @@ import Landing from './pages/Landing';
 import Signin from './pages/Signin';
 import Registration from './pages/Registration';
 import Homepage from './pages/Homepage';
+import Settings from './pages/Settings';
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<Landing/>} />
+          <Route path="/Landing" element={<Landing/>} />
           <Route path="/Signin" element={<Signin/>}/>
           <Route path="/Login" element={<Registration/>} />
-          <Route path="/Homepage" element={<Homepage/>} />
+          <Route path="/Setting" element={<Settings/>} />
+          <Route path="/" element={<Homepage/>} />
         </Routes>
       </Router>
     </div>
