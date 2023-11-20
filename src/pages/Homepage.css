@@ -54,19 +54,36 @@ nav h1{
     gap:2.25rem;
 }
 .main-content{
-
+    margin:1rem;
     width:60vw;
+    border:solid 1px #d3806d;
+    border-radius:20px;
+}
+.main-content h1{
+    background-color: #d3806d;
+    border-radius: 20px 20px 0 0;
+    text-align: center;
+    color:#fff;
+    letter-spacing: 1.25px;
+}
+.main-content .link{
+    font-size: .75em;
+    text-align: center;
+    border-bottom: solid 1px #d3806d;
 }
 .stats{
     padding:.5rem;
     width:25vw;
     border-left:solid 1px #d3806d;
+    display: flex;
+    flex-direction: column;
+    gap:1rem;
 }
 .stats_title{
     display: flex;
     align-items: center;
     gap:1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 .stats_title img{
     width:40px;
@@ -83,7 +100,7 @@ nav h1{
     
 }
 .count{
-    width:auto;
+    width:45%;
     border:solid 1px #d3806d;
     padding:.5rem;
 }

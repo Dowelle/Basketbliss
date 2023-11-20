@@ -3,8 +3,6 @@ import React from 'react';
 
 import {Link} from 'react-router-dom';
 
-
-import Setting from '../assets/settings.png';
 import Logout from '../assets/logout.png';
 import Shop from '../assets/shop.png';
 import Insight from '../assets/insight.png';
@@ -12,6 +10,8 @@ import Marketing from '../assets/marketing.png';
 import People from '../assets/people.png';
 import Question from '../assets/question.png';
 import Monitor from '../assets/monitor.png';
+import User from '../assets/user.png';
+import Order from '../assets/order.png';
 
 function Homepage() {
   return (
@@ -36,7 +36,7 @@ function Homepage() {
                     <Link className="nav_a" to="/Setting">Shop</Link>
                 </div>
                 <div className="nav_button">
-                    <img src={Setting} alt=""/>
+                    <img src={User} alt=""/>
                     <Link className="nav_a" to="/Setting">Profile</Link>
                 </div>
                 <div className="nav_line"></div>
@@ -55,34 +55,67 @@ function Homepage() {
 
         </nav>
         <div className="main-content">
-
+        <div>
+            <h1>Glamshades</h1>
+            <p className="link">https://fictional-spoon-p9j5r5vpqq9c6567.github.dev/</p>
+        </div>
         </div>
         <div className="stats">
+            <div>
+                <div class="stats_title">
+                    <h1>Web Analytics</h1>
+                    <img src={Monitor} alt="" />
+                </div>
+                <div className="stats_web">
+                    
+                    <div className="count">
+                        <h3>Unique visitors</h3>
+                        <p>143</p>
+                    </div>
+                    <div className="count">
+                        <h3>Page views</h3>
+                        <p>420</p>
+                    </div>
+                    <div className="count">
+                        <h3>Bounce rate</h3>
+                        <p>69%</p>
+                    </div>
+                    <div className="count">
+                        <h3>Avg. session duration</h3>
+                        <p>4:20 mins</p>
+                    </div>
+    
+                </div>
+            </div>
+            <div>
             <div class="stats_title">
-                <h1>Web Analytics</h1>
-                <img src={Monitor} alt="" />
+                    <h1>Orders Fullfillment</h1>
+                    <img src={Order} alt="" />
+                </div>
+                <div className="stats_web">
+                    
+                    <div className="count">
+                        <h3>Pending orders</h3>
+                        <p>143</p>
+                    </div>
+                    <div className="count">
+                        <h3>Order processing</h3>
+                        <p>420</p>
+                    </div>
+                    <div className="count">
+                        <h3>Returns & Exchange</h3>
+                        <p>69%</p>
+                    </div>
+                    <div className="count">
+                        <h3>Avg. session duration</h3>
+                        <p>4:20 mins</p>
+                    </div>
+    
+                </div>
             </div>
-            <div className="stats_web">
-                
-                <div className="count">
-                    <h3>Unique visitors</h3>
-                    <p>143</p>
-                </div>
-                <div className="count">
-                    <h3>Page views</h3>
-                    <p>420</p>
-                </div>
-                <div className="count">
-                    <h3>Bounce rate</h3>
-                    <p>69%</p>
-                </div>
-                <div className="count">
-                    <h3>Avg. session duration</h3>
-                    <p>4:20 mins</p>
-                </div>
-  
-            </div>
+            
         </div>
+        
     </div>
   )
 }
