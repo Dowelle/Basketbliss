@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react';
 import './Landing.css';
 
 import { Link } from 'react-router-dom';
+
+import {signUpMerchantWithEmailAndPassword} from '../services/firebaseActions'
 
 import facebook from '../assets/facebook.png';
 import twitter from '../assets/twitter.png';
@@ -18,6 +20,22 @@ function Landing() {
   const [isOpenSignin, setIsOpenSignin] = useState(true);
   const [isOpenLogin, setIsOpenLogin] = useState(true);
   const [isOpenRegister, setIsOpenRegister] = useState(true);
+  
+  const [registerEmail, setRegisterEmail] = useState("")
+  const [registerPassword, setRegisterPassword] = useState("")
+  const [registerConfirmationPassword, setRegisterConfirmationPassword] = useState("")
+  const [authMessage, setAuthMessage] = useState("")
+  const [errorCode, setErrorCode] = useState("")
+  
+  useEffect(() => {
+    if(errorCode == 'auth/weak-password') {
+      setAuthMessage("Password needs to be atleast 6 characters.")
+    } else if(errorCode == 'auth/invalid-email') {
+      setAuthMessage("Please use a valid email.")
+    } else if(errorCode == 'auth/email-already-in-use') {
+      setAuthMessage("Email is already in use.")
+    }
+  }, [errorCode])
 
   const handleToggleSignin = () => {
     setIsOpenSignin(!isOpenSignin);
@@ -30,6 +48,33 @@ function Landing() {
   const handleToggleRegister = () => {
     setIsOpenRegister(!isOpenRegister);
   };
+  
+  const handleRegisterEmailValueChange = (e) => {
+    setRegisterEmail(e.target.value)
+    setAuthMessage("")
+  }
+  const handleRegisterPasswordValueChange = (e) => {
+    setRegisterPassword(e.target.value)
+    setAuthMessage("")
+  }
+  const handleRegisterConfirmationPasswordValueChange = (e) => {
+    setRegisterConfirmationPassword(e.target.value)
+    setAuthMessage("")
+  }
+  
+  const signUpMerchant = () => {
+    console.log(registerPassword, registerEmail, registerConfirmationPassword)
+    
+    if(registerConfirmationPassword !== registerPassword) {
+      setAuthMessage("Password needs to match")
+      
+      return;
+    }
+    
+    signUpMerchantWithEmailAndPassword(registerEmail, registerPassword).then(errorCode => {
+      setErrorCode(errorCode)
+    })
+  }
 
 
   return (
@@ -42,7 +87,7 @@ function Landing() {
           <h3>FAQ</h3>
         </div>
         <div className="auth">
-          <button onClick={handleToggleSignin} className="signin">Sign in</button>
+          <button onClick={handleToggleSignin} className="signin">Sign Up</button>
           <button onClick={handleToggleRegister} className="register">Log in</button>
         </div>
       </div>
@@ -85,16 +130,23 @@ function Landing() {
         <input
         type="email"
         placeholder="Email"
+        value={registerEmail}
+        onChange={handleRegisterEmailValueChange}
         />
         <input
         type="password"
         placeholder="Enter password"
+        value={registerPassword}
+        onChange={handleRegisterPasswordValueChange}
         />
         <input
         type="password"
         placeholder="Confirm password"
+        value={registerConfirmationPassword}
+        onChange={handleRegisterConfirmationPasswordValueChange}
         />
-        <button className="submit">Submit</button>
+        {authMessage && <p>{authMessage}</p>}
+        <button className="submit" onClick={signUpMerchant}>Submit</button>
       </div>
 
       <div className="open_login" style={{ display: isOpenRegister ? 'none' : 'flex' }}>
@@ -103,8 +155,8 @@ function Landing() {
           <button onClick={handleToggleRegister}>X</button>
         </div>
         <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Enter password" />
-        <button className="submit">Submit</button>
+        <input type="password" placeholder="Enter password"/>
+        <button className="submit" >Submit</button>
       </div>
       
 
