@@ -37,7 +37,7 @@ function Homepage() {
                 </div>
                 <div className="nav_button">
                     <img src={Setting} alt=""/>
-                    <Link className="nav_a" to="/Setting">Settings</Link>
+                    <Link className="nav_a" to="/Setting">Profile</Link>
                 </div>
                 <div className="nav_line"></div>
                 <div className="nav_buttom">
@@ -59,7 +59,7 @@ function Homepage() {
         </div>
         <div className="stats">
             <div class="stats_title">
-                <h1>Statistics</h1>
+                <h1>Web Analytics</h1>
                 <img src={Monitor} alt="" />
             </div>
             <div className="stats_web">

@@ -23,6 +23,9 @@ nav{
     padding-top:1.5rem;
 
 }
+nav h1{
+    color:#fff;
+}
 .nav_a{
     color:#333;
     font-family: 'Poppins';
@@ -57,7 +60,7 @@ nav{
 .stats{
     padding:.5rem;
     width:25vw;
-    border-left:solid 1px #a8a8a8;
+    border-left:solid 1px #d3806d;
 }
 .stats_title{
     display: flex;
@@ -70,6 +73,7 @@ nav{
 }
 .stats_title h1{
     font-size: 1.25em;
+    color:#d3806d;
 }
 .stats_web{
     display: flex;
