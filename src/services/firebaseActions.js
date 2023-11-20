@@ -16,13 +16,11 @@ export const signUpMerchantWithEmailAndPassword = (email, password) => {
     const errorCode = error.code;
     const errorMessage = error.message;
     
-    console.log(errorCode, errorMessage);
     return errorCode;
   });
 }
 
-export const logInWithEmailAndPassword = (email, password) => {
-  
+export const logInMerchantWithEmailAndPassword = (email, password) => {
   
   return signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
     // Signed in

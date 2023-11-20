@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import React from 'react';
 import './Landing.css';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-import {signUpMerchantWithEmailAndPassword} from '../services/firebaseActions'
+import { logInMerchantWithEmailAndPassword, signUpMerchantWithEmailAndPassword } from '../services/firebaseActions'
 
 import facebook from '../assets/facebook.png';
 import twitter from '../assets/twitter.png';
@@ -26,6 +25,12 @@ function Landing() {
   const [registerConfirmationPassword, setRegisterConfirmationPassword] = useState("")
   const [authMessage, setAuthMessage] = useState("")
   const [errorCode, setErrorCode] = useState("")
+  
+  const [loginEmail, setLoginEmail] = useState("")
+  const [loginPassword, setLoginPassword] = useState("")
+  
+  const navigate = useNavigate()
+  
   
   useEffect(() => {
     if(errorCode == 'auth/weak-password') {
@@ -62,9 +67,16 @@ function Landing() {
     setAuthMessage("")
   }
   
+  const handleLoginEmailValueChange = (e) => {
+    setLoginEmail(e.target.value)
+    setAuthMessage("")
+  }
+  const handleLoginPasswordValueChange = (e) => {
+    setLoginPassword(e.target.value)
+    setAuthMessage("")
+  }
+  
   const signUpMerchant = () => {
-    console.log(registerPassword, registerEmail, registerConfirmationPassword)
-    
     if(registerConfirmationPassword !== registerPassword) {
       setAuthMessage("Password needs to match")
       
@@ -72,6 +84,19 @@ function Landing() {
     }
     
     signUpMerchantWithEmailAndPassword(registerEmail, registerPassword).then(errorCode => {
+      if(!errorCode) {
+        navigate('/HomePage');
+      }
+      
+      setErrorCode(errorCode)
+    })
+  }
+  const loginMerchant = () => {
+    logInMerchantWithEmailAndPassword(loginEmail, loginPassword).then(errorCode => {
+      if(!errorCode) {
+        navigate('/HomePage');
+      }
+      
       setErrorCode(errorCode)
     })
   }
@@ -154,9 +179,10 @@ function Landing() {
           <h1>Log in an account</h1>
           <button onClick={handleToggleRegister}>X</button>
         </div>
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Enter password"/>
-        <button className="submit" >Submit</button>
+        <input type="email" placeholder="Email" value={loginEmail} onChange={handleLoginEmailValueChange}/>
+        <input type="password" placeholder="Enter password" value={loginPassword} onChange={handleLoginPasswordValueChange}/>
+       {authMessage && <p>{authMessage}</p>}
+        <button className="submit" onClick={loginMerchant}>Submit</button>
       </div>
       
 
