@@ -38,6 +38,8 @@ export const logInMerchantWithEmailAndPassword = (email, password) => {
 }
 
 export const signOutUser = () => {
+  console.log('signout')
+
   return signOut(auth).then(() => {
     return true;
   }).catch((error) => {
@@ -72,8 +74,6 @@ export const getMerchantDetails = (merchantId) => {
 }
 
 onAuthStateChanged(auth, (user) => {
-  console.log("test")
-  console.log(user)
   if(user) {
     sessionStorage.setItem("uid", user.uid)
   } else {
