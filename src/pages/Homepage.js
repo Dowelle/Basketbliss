@@ -1,7 +1,10 @@
 import './Homepage.css';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import {Link} from 'react-router-dom';
+
+import { signOutUser } from '../services/firebaseActions';
 
 import Logout from '../assets/logout.png';
 import Shop from '../assets/shop.png';
@@ -19,6 +22,17 @@ import Jacket from '../assets/jacket-nobg.png';
 import Dress from '../assets/dress-nobg.png';
 
 function Homepage() {
+    const navigate = useNavigate()
+
+    const signOutMerchant = () => {
+
+        signOutUser().then((res) => {
+            if(res) {
+                navigate('/Landing')
+            }
+        })
+    }
+
   return (
     <div className="Homepage">
         <nav className="nav">
@@ -52,7 +66,7 @@ function Homepage() {
                     </div>
                     <div className="nav_button">
                         <img src={Logout} alt=""/>
-                        <Link className="nav_a" to="/Setting">Sign out</Link>
+                        <button onClick={signOutMerchant}>Sign Out</button>
                     </div>
                 </div>
 
