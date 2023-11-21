@@ -8,6 +8,7 @@ import Signin from './pages/Signin';
 import Registration from './pages/Registration';
 import Homepage from './pages/Homepage';
 import Settings from './pages/Settings';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
           <Route path="/Landing" element={<Landing/>} />
           <Route path="/Signin" element={<Signin/>}/>
           <Route path="/Login" element={<Registration/>} />
-          <Route path="/Setting" element={<Settings/>} />
+          <Route path="/Profile" element={<Profile/>} />
           <Route path="/" element={<Homepage/>} />
         </Routes>
       </Router>

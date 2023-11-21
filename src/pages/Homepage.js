@@ -13,13 +13,16 @@ import Marketing from '../assets/marketing.png';
 import People from '../assets/people.png';
 import Question from '../assets/question.png';
 import Monitor from '../assets/monitor.png';
-import User from '../assets/user.png';
+
 import Order from '../assets/order.png';
 import Notification from '../assets/notification.png';
 import Shoes from '../assets/shoes-nobg.png';
 import Pants from '../assets/pants-nobg.png';
 import Jacket from '../assets/jacket-nobg.png';
 import Dress from '../assets/dress-nobg.png';
+import Add from '../assets/add.png';
+
+import Nav from '../components/Nav';
 
 function Homepage() {
     const navigate = useNavigate()
@@ -35,7 +38,8 @@ function Homepage() {
 
   return (
     <div className="Homepage">
-        <nav className="nav">
+        <Nav />
+        {/* <nav className="nav">
             <h1>Glamshades</h1>
             <div className="nav_links">
                 <div className="nav_button">
@@ -72,7 +76,7 @@ function Homepage() {
 
             </div>
 
-        </nav>
+        </nav> */}
         <div className="main-content">
             <div className="link_container">
                 <h1>Glamshades</h1>
