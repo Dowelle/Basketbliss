@@ -108,6 +108,11 @@ nav h1{
     width: 170px;
     height:170px;
 
+    border: solid 1px rgb(219, 219, 219);
+    transition: 350ms;
+}
+.featured_products img:hover{
+    scale:1.05;
 }
 .stats{
     padding:.5rem;

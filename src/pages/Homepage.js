@@ -14,9 +14,9 @@ import User from '../assets/user.png';
 import Order from '../assets/order.png';
 import Notification from '../assets/notification.png';
 import Shoes from '../assets/shoes-nobg.png';
-import Pants from '../assets/pants.webp';
-import Jacket from '../assets/jacket.jpg';
-import Dress from '../assets/dress1.jpg';
+import Pants from '../assets/pants-nobg.png';
+import Jacket from '../assets/jacket-nobg.png';
+import Dress from '../assets/dress-nobg.png';
 
 function Homepage() {
   return (
@@ -131,7 +131,6 @@ function Homepage() {
             </div>
             
         </div>
-        
     </div>
   )
 }

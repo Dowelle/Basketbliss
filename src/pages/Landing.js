@@ -187,6 +187,7 @@ function Landing() {
       
 
       <marquee>heyyyy</marquee>
+      
     </div>
   )
 }
