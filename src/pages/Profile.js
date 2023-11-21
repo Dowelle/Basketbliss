@@ -44,7 +44,9 @@ function Profile() {
                         <p>Cover Photo</p>
                         <input type="file"/>
                     </div>
+                    
                 </div>
+                <button>Save</button>
             </div>
         </div>
     </div>
