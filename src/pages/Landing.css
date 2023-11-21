@@ -100,6 +100,23 @@
     width:30%;
     text-align: justify;
     color:#333;
+    clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+    animation: appear 1350ms 1 ease forwards;
+    background-color: #333;
+}
+@keyframes appear{
+    from{}
+    to{
+        background-color: #D3806D;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+    }
+}
+@keyframes appear2{
+    from{}
+    to{
+        background-color: #D3806D;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
 }
 .about h3, .contact h3{
     color:#D3806D;
@@ -108,6 +125,8 @@
     
 }
 .contact{
+    animation: appear2 1350ms 1 ease forwards 1350ms;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
     display: flex;
     flex-direction: column;
     gap:1.35rem;
