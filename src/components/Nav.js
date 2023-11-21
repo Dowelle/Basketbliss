@@ -1,5 +1,9 @@
-import React from 'react'
+import {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import {Link } from 'react-router-dom';
+
+import { getMerchantDetails, signOutUser } from '../services/firebaseActions';
+
 import '../pages/Homepage.css';
 
 import User from '../assets/user.png';
@@ -11,9 +15,30 @@ import People from '../assets/people.png';
 import Question from '../assets/question.png';
 
 function Nav() {
+    const [businessName, setBusinessName] = useState('')
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const merchantId = sessionStorage.uid;
+
+        getMerchantDetails(merchantId).then(data => {
+            console.log(data)
+            setBusinessName(data.businessName.stringValue)
+        })
+    }, [])
+
+    const signOutMerchant = () => {
+
+        signOutUser().then((res) => {
+            if(res) {
+                navigate('/Landing')
+            }
+        })
+    }
   return (
     <nav className="nav">
-            <h1>Glamshades</h1>
+            <h1>{businessName || 'Glamshades'}</h1>
             <div className="nav_links">
                 <div className="nav_button">
                     <img src={Insight} alt=""/>
@@ -43,7 +68,7 @@ function Nav() {
                     </div>
                     <div className="nav_button">
                         <img src={Logout} alt=""/>
-                        <Link className="nav_a" to="/Setting">Sign out</Link>
+                        <button className="nav_a" onClick={signOutMerchant}>Sign out</button>
                     </div>
                 </div>
 

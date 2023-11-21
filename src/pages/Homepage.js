@@ -25,16 +25,7 @@ import Add from '../assets/add.png';
 import Nav from '../components/Nav';
 
 function Homepage() {
-    const navigate = useNavigate()
-
-    const signOutMerchant = () => {
-
-        signOutUser().then((res) => {
-            if(res) {
-                navigate('/Landing')
-            }
-        })
-    }
+    
 
   return (
     <div className="Homepage">
