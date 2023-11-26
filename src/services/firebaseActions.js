@@ -68,6 +68,7 @@ export const getMerchantDetails = (merchantId) => {
   
   return getDoc(docRef).then(payload => {
     const data = payload._document.data.value.mapValue.fields;
+
     
     return data;
   })

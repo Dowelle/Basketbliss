@@ -14,8 +14,8 @@ import Marketing from '../assets/marketing.png';
 import People from '../assets/people.png';
 import Question from '../assets/question.png';
 
-function Nav() {
-    const [businessName, setBusinessName] = useState('')
+function Nav(props) {
+    const {businessName, setBusinessName} = props
 
     const navigate = useNavigate()
 
@@ -24,7 +24,10 @@ function Nav() {
 
         getMerchantDetails(merchantId).then(data => {
             console.log(data)
-            setBusinessName(data.businessName.stringValue)
+            if(data) {
+                setBusinessName(data.businessName.stringValue)
+
+            }
         })
     }, [])
 
@@ -32,7 +35,7 @@ function Nav() {
 
         signOutUser().then((res) => {
             if(res) {
-                navigate('/Landing')
+                navigate('/')
             }
         })
     }
@@ -54,7 +57,7 @@ function Nav() {
                 </div>
                 <div className="nav_button">
                     <img src={Shop} alt=""/>
-                    <Link className="nav_a" to="/Setting">Shop</Link>
+                    <Link className="nav_a" to="/Homepage">Shop</Link>
                 </div>
                 <div className="nav_button">
                     <img src={User} alt=""/>

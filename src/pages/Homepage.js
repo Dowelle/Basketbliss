@@ -1,5 +1,8 @@
 import './Homepage.css';
 import React from 'react';
+
+import Statistics from '../components/Statistics';
+import UserView from '../components/UserView';
 import { useNavigate } from 'react-router-dom';
 
 import {Link} from 'react-router-dom';
@@ -24,122 +27,16 @@ import Add from '../assets/add.png';
 
 import Nav from '../components/Nav';
 
-function Homepage() {
+function Homepage(props) {
+    const {businessName, setBusinessName} = props
     
 
   return (
     <div className="Homepage">
-        <Nav />
-        {/* <nav className="nav">
-            <h1>Glamshades</h1>
-            <div className="nav_links">
-                <div className="nav_button">
-                    <img src={Insight} alt=""/>
-                    <Link className="nav_a" to="/Setting">Insights</Link>
-                </div>
-                <div className="nav_button">
-                    <img src={People} alt=""/>
-                    <Link className="nav_a" to="/Setting">Customer</Link>
-                </div>
-                <div className="nav_button">
-                    <img src={Marketing} alt=""/>
-                    <Link className="nav_a" to="/Setting">Promote</Link>
-                </div>
-                <div className="nav_button">
-                    <img src={Shop} alt=""/>
-                    <Link className="nav_a" to="/Setting">Shop</Link>
-                </div>
-                <div className="nav_button">
-                    <img src={User} alt=""/>
-                    <Link className="nav_a" to="/Setting">Profile</Link>
-                </div>
-                <div className="nav_line"></div>
-                <div className="nav_buttom">
-                    <div className="nav_button">
-                        <img src={Question} alt=""/>
-                        <Link className="nav_a" to="/Setting">Help</Link>
-                    </div>
-                    <div className="nav_button">
-                        <img src={Logout} alt=""/>
-                        <button onClick={signOutMerchant}>Sign Out</button>
-                    </div>
-                </div>
-
-            </div>
-
-        </nav> */}
-        <div className="main-content">
-            <div className="link_container">
-                <h1>Glamshades</h1>
-                <p className="link">https://fictional-spoon-p9j5r5vpqq9c6567.github.dev/</p>
-            </div>
-            <div className="main-top">
-                <input type="text" placeholder="Search items..."/>
-                <img className="notif" src={Notification} alt="" />
-            </div>
-
-            <div className="featured_products">
-                <img src={Jacket} />
-                <img src={Shoes} />
-                <img src={Dress} />
-                <img src={Pants} />
-            </div>
-        </div>
-        <div className="stats">
-            <div>
-                <div class="stats_title">
-                    <h1>Web Analytics</h1>
-                    <img src={Monitor} alt="" />
-                </div>
-                <div className="stats_web">
-                    
-                    <div className="count">
-                        <h3>Unique visitors</h3>
-                        <p>143</p>
-                    </div>
-                    <div className="count">
-                        <h3>Page views</h3>
-                        <p>420</p>
-                    </div>
-                    <div className="count">
-                        <h3>Bounce rate</h3>
-                        <p>69%</p>
-                    </div>
-                    <div className="count">
-                        <h3>Avg. session duration</h3>
-                        <p>4:20 mins</p>
-                    </div>
-    
-                </div>
-            </div>
-            <div>
-            <div class="stats_title">
-                    <h1>Orders Fullfillment</h1>
-                    <img src={Order} alt="" />
-                </div>
-                <div className="stats_web">
-                    
-                    <div className="count">
-                        <h3>Pending orders</h3>
-                        <p>143</p>
-                    </div>
-                    <div className="count">
-                        <h3>Order processing</h3>
-                        <p>420</p>
-                    </div>
-                    <div className="count">
-                        <h3>Returns & Exchange</h3>
-                        <p>69%</p>
-                    </div>
-                    <div className="count">
-                        <h3>Avg. session duration</h3>
-                        <p>4:20 mins</p>
-                    </div>
-    
-                </div>
-            </div>
-            
-        </div>
+        <Nav businessName={businessName} setBusinessName={setBusinessName}/>
+        <UserView businessName={businessName} setBusinessName={setBusinessName}/>
+        
+        <Statistics  />
     </div>
   )
 }

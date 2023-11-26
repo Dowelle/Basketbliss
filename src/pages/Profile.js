@@ -6,8 +6,8 @@ import { updateMerchantDetails, getMerchantDetails } from '../services/firebaseA
 import './Homepage.css';
 import './Profile.css'
 
-function Profile() {
-    const [businessName, setBusinessName] = useState('')
+function Profile(props) {
+    const {businessName, setBusinessName} = props
     const [businessTagline, setBusinessTagline] = useState('')
     const [businessPhoneNumber, setBusinessPhoneNumber] = useState('')
     const [businessEmail, setBusinessEmail] = useState('')
@@ -18,11 +18,13 @@ function Profile() {
 
         getMerchantDetails(merchantId).then(data => {
             console.log(data)
-            setBusinessName(data.businessName.stringValue)
-            setBusinessTagline(data.businessTagline.stringValue)
-            setBusinessPhoneNumber(data.businessPhoneNumber.stringValue)
-            setBusinessEmail(data.businessEmail.stringValue)
-            setBusinessAddress(data.businessAddress.stringValue)
+            if(data) {
+                setBusinessName(data.businessName.stringValue)
+                setBusinessTagline(data.businessTagline.stringValue)
+                setBusinessPhoneNumber(data.businessPhoneNumber.stringValue)
+                setBusinessEmail(data.businessEmail.stringValue)
+                setBusinessAddress(data.businessAddress.stringValue)
+            }
         })
     }, [])
 
@@ -44,12 +46,26 @@ function Profile() {
 
     const submitMerchantDetails = () => {
         const merchantId = sessionStorage.uid;
-        updateMerchantDetails({businessName, businessTagline, businessEmail, businessPhoneNumber, businessAddress}, merchantId);
+        updateMerchantDetails({businessName, businessTagline, businessEmail, businessPhoneNumber, businessAddress}, merchantId).then(() => {
+            getMerchantDetails(merchantId).then(data => {
+                console.log(data)
+                if(data) {
+                    console.log(`di gumagana`);
+                    setBusinessName(data.businessName.stringValue)
+                    setBusinessTagline(data.businessTagline.stringValue)
+                    setBusinessPhoneNumber(data.businessPhoneNumber.stringValue)
+                    setBusinessEmail(data.businessEmail.stringValue)
+                    setBusinessAddress(data.businessAddress.stringValue)
+                }
+            })
+        }
+
+        );
     }
     
   return (
     <div className="Profile">
-        <Nav/>
+        <Nav businessName={businessName} setBusinessName={setBusinessName}/>
         <div className="form">
             <div className="input_left">
                 <h1>.</h1>

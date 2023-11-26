@@ -55,7 +55,7 @@ nav h1{
 }
 .main-content{
     margin:1rem;
-    width:60vw;
+    width:95%;
     border:solid 1px #d3806d;
     border-radius:20px;
 }
@@ -70,6 +70,13 @@ nav h1{
     font-size: .75em;
     text-align: center;
     border-bottom: solid 1px #d3806d;
+    text-decoration:none;
+
+}
+.link_container{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
 }
 
 .main-top{
