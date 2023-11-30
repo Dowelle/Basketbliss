@@ -47,3 +47,14 @@ footer{
 .contact-footer img{
     width:1.5rem;
 }
+@media(max-width:412px){
+    .social-container img{
+        width:1.25rem;
+    }
+    .contact-footer img{
+        width:.75rem;
+    }
+    .footer-bottom{
+        padding:.25rem 0;
+    }
+}

@@ -28,4 +28,7 @@ border-radius: 5% 5% 0 0;
     .product{
         width:8.5rem;
     }
+    .product h2{
+        font-size: .85em;
+    }
 }
