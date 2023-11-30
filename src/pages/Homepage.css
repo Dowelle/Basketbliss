@@ -9,7 +9,7 @@
     display: flex;
     justify-content: space-between;
 }
-nav{
+/* nav{
     background-color:#d3806d;
     height:100vh;
     width:15vw;
@@ -52,7 +52,7 @@ nav h1{
     display: flex;
     flex-direction: column;
     gap:2.25rem;
-}
+} */
 .main-content{
     margin:1rem;
     width:95%;

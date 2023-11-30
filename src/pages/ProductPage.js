@@ -11,7 +11,8 @@ function ProductPage() {
         <p>This is sample This is sample This is sample This is sample This is sample This is sample This is sample This is sample </p>
       </div>
       <div className="productPage-right">
-        <h1>₱100</h1>
+        <h1>Sample product name</h1>
+        <h2>₱100</h2>
         <div>
           <h2>Sizes</h2>
           <div className="productPage-buttons">

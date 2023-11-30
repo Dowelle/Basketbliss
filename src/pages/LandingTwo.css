@@ -55,7 +55,7 @@ html{
 }
 
 .inputs button{
-    background-color: #474F7B;
+    background-color: #F48BA9;
     padding:.25rem .5rem;
     color:#fff;
 }
@@ -77,7 +77,7 @@ html{
     flex-direction: column;
     gap:.75rem;
     clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
-    transform: translateX(-7rem);
+
     animation:appear-landingmiddle 1200ms ease forwards 1200ms;
 }
 @keyframes appear-landingmiddle{
@@ -98,27 +98,57 @@ html{
     background-color: #F48BA9;
     color:#fff;
     width:fit-content;
-    padding:.5rem 1rem;
+
     cursor: pointer;
-    transition: 350ms;
+    
 }
-.create:hover{
+.account{
+    padding:.5rem 1rem;
+    background-color: #F48BA9;
+    color:#fff;
+    transition: 250ms;
+}
+.create:hover, .account:hover{
     background-color: #fb316a;
+    scale:1.05;
 }
-.notCreate {
-    position: fixed;
-    background-color: green;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
+/* .notCreate {
+    display: none;
+} */
+.create-account{
+    padding:.75rem;
+    border:solid 1px #F48BA9;
     width:100%;
-    height:100%;
+}
+.create-account h1{
+    font-size: 1em;
+}
+.create-container{
+    display: flex;
+    gap:.5rem;
+    flex-direction: column;
 }
 .LandingMiddle img{
     width:40vw;
+    height:auto;
     transform: translateY(-20%);
     opacity:0;
+    
     animation:appear-landingmiddle-img 1200ms ease-in forwards 1200ms, appear-landingmiddle-img2 2000ms infinite linear alternate-reverse;
+}
+.middle{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items:flex-start;
+    transform: translateX(-7rem);
+    clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+    animation:appear-landingmiddle 1200ms ease forwards 1200ms;
+}
+.button-container{
+    display:flex;
+    /* justify-content: space-between; */
+    gap:1rem;
 }
 @keyframes appear-landingmiddle-img{
     from{

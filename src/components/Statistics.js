@@ -8,7 +8,7 @@ function Statistics() {
   return (
     <div className="stats">
             <div>
-                <div class="stats_title">
+                <div className="stats_title">
                     <h1>Web Analytics</h1>
                     <img src={Monitor} alt="" />
                 </div>
@@ -34,7 +34,7 @@ function Statistics() {
                 </div>
             </div>
             <div>
-            <div class="stats_title">
+            <div className="stats_title">
                     <h1>Orders Fullfillment</h1>
                     <img src={Order} alt="" />
                 </div>

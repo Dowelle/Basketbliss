@@ -1,41 +1,163 @@
-import React,{useState} from 'react'
+import {useState, useEffect} from 'react'
 import './LandingTwo.css'
+import { Link, useNavigate } from 'react-router-dom';
+
+import { logInMerchantWithEmailAndPassword, signUpMerchantWithEmailAndPassword } from '../services/firebaseActions'
 
 import LandingPic from '../assets/landing-left.svg'
 import Plant from '../assets/plant.svg'
 import Plant2 from '../assets/plant2.svg'
+import LandingMiddle_inner from '../components/LandingMiddle_inner'
 
 function LandingTwo() {
-  const [isCreate, setCreate] =useState(true);
-  const handleClickCreate = () => {
-    setCreate(!isCreate);
+  const [isOpenSignin, setIsOpenSignin] = useState(true);
+  const [isOpenLogin, setIsOpenLogin] = useState(true);
+  const [isOpenRegister, setIsOpenRegister] = useState(true);
+  
+  const [registerEmail, setRegisterEmail] = useState("")
+  const [registerPassword, setRegisterPassword] = useState("")
+  const [registerConfirmationPassword, setRegisterConfirmationPassword] = useState("")
+  const [authMessage, setAuthMessage] = useState("")
+  const [errorCode, setErrorCode] = useState("")
+  
+  const [loginEmail, setLoginEmail] = useState("")
+  const [loginPassword, setLoginPassword] = useState("")
+  
+  const navigate = useNavigate()
+  
+  
+  useEffect(() => {
+    if(errorCode == 'auth/weak-password') {
+      setAuthMessage("Password needs to be atleast 6 characters.")
+    } else if(errorCode == 'auth/invalid-email') {
+      setAuthMessage("Please use a valid email.")
+    } else if(errorCode == 'auth/email-already-in-use') {
+      setAuthMessage("Email is already in use.")
+    }
+  }, [errorCode])
+
+  const handleToggleSignin = () => {
+    setIsOpenSignin(!isOpenSignin);
   };
+
+  const handleToggleLogin = () => {
+    setIsOpenLogin(!isOpenLogin);
+  };
+
+  const handleToggleRegister = () => {
+    setIsOpenRegister(!isOpenRegister);
+  };
+  
+  const handleRegisterEmailValueChange = (e) => {
+    setRegisterEmail(e.target.value)
+    setAuthMessage("")
+  }
+  const handleRegisterPasswordValueChange = (e) => {
+    setRegisterPassword(e.target.value)
+    setAuthMessage("")
+  }
+  const handleRegisterConfirmationPasswordValueChange = (e) => {
+    setRegisterConfirmationPassword(e.target.value)
+    setAuthMessage("")
+  }
+  
+  const handleLoginEmailValueChange = (e) => {
+    setLoginEmail(e.target.value)
+    setAuthMessage("")
+  }
+  const handleLoginPasswordValueChange = (e) => {
+    setLoginPassword(e.target.value)
+    setAuthMessage("")
+  }
+  
+  const signUpMerchant = () => {
+    if(registerConfirmationPassword !== registerPassword) {
+      setAuthMessage("Password needs to match")
+      
+      return;
+    }
+    
+    signUpMerchantWithEmailAndPassword(registerEmail, registerPassword).then(errorCode => {
+      if(!errorCode) {
+        navigate('/Homepage');
+      }
+      
+      setErrorCode(errorCode)
+    })
+  }
+  const loginMerchant = () => {
+    logInMerchantWithEmailAndPassword(loginEmail, loginPassword).then(errorCode => {
+      if(!errorCode) {
+        navigate('/Homepage');
+      }
+      
+      setErrorCode(errorCode)
+    })
+  }
+  
+  const [isCreate, setIsCreate] =useState(true);
+  const handleClickCreate = () => {
+    setIsCreate(false);
+  };
+  const [isExit, setIsExit] =useState(true);
+  const handleClickExit = () => {
+    setIsCreate(true);
+  };
+  
+
+
+
   return (
     <div className="LandingTwo">
         <div className="title_container">
             <h1>BASKETBLISS</h1>
             <div className="inputs">
-              <input placeholder='Enter your email' type="email"/>
-              <input placeholder='Enter your password' type="password"/>
-              <button>Submit</button>
+              <input placeholder='Enter your email' type="email" value={loginEmail} onChange={handleLoginEmailValueChange}/>
+              <input placeholder='Enter your password' type="password" value={loginPassword} onChange={handleLoginPasswordValueChange}/>
+              <button onClick={loginMerchant}>Submit</button>
             </div>
         </div>
         <div className="LandingMiddle">
           <img src={LandingPic} alt="" />
-          <div className="LandingMiddle_inner">
-            <h1>Your<span>Shop</span>, Your <span>Rules</span>:<br/>Craft Your Online Storefront</h1>
-            <div className="LandingLine"></div>
-            <p>Your passion, your products, your success. Take control of your<br/> 
-online retail journey and build your brand the way you envision it.</p>
-            <div className = {isCreate ? "create" : "notCreate"} onClick={handleClickCreate}>
-              Create account
+          <div className="middle">
+            <LandingMiddle_inner/>
+            <div className = {isCreate ? "create" : "create-account"} >
+              {isCreate && <div className="account" onClick={handleClickCreate}>Create account</div>}
+              
               {!isCreate && (
-                <div className="create-account">
-                  <h1>Create</h1>
+                <div className="create-container">
+                  <h1>Create Account:</h1>
+                  <input type="email" placeholder="Enter your email"
+                  value={registerEmail}
+                  onChange={handleRegisterEmailValueChange} />
+                  {/* <div className="passwords"> */}
+                    <input type="password" placeholder="Enter your password" value={registerPassword}
+        onChange={handleRegisterPasswordValueChange}/>
+                    <input type="password" placeholder="Enter your confirm" value={registerConfirmationPassword}
+        onChange={handleRegisterConfirmationPasswordValueChange}/>
+        {authMessage && <p>{authMessage}</p>}
+                  {/* </div> */}
+                  <div className="button-container">
+                    <button onClick={signUpMerchant} style={{
+                      backgroundColor:"#F48BA9",
+                      padding:".5rem 1rem",
+                      color:"#fff"
+                    }}  >Submit</button>
+                    <button style={{
+                      padding:".5rem 1rem",
+                      borderStyle:"solid",
+                      borderColor:"#F48BA9",
+                      color:"#F48BA9",
+                      borderWidth:"1px",
+                      backgroundColor:"#DAF0F7"
+                    }} onClick={handleClickExit}>Close</button>
+                  </div>
                 </div>
               )}
             </div>
           </div>
+          
+
         </div>
         <div>
           
@@ -46,4 +168,4 @@ online retail journey and build your brand the way you envision it.</p>
   )
 }
 
-export default LandingTwo
+export default LandingTwo;

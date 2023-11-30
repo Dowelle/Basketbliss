@@ -1,0 +1,31 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+.product{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #474F7B;
+    color:#fff;
+    width:15rem;
+    border-radius: 5%;
+    cursor: pointer;
+
+    transition: all 350ms;
+}
+.product:hover{
+    scale:1.05;
+    box-shadow: 0 0 5px gray;
+}
+.product img{
+border-radius: 5% 5% 0 0;
+ width:100%;
+}
+@media(max-width:412px){
+    .product{
+        width:8.5rem;
+    }
+}
