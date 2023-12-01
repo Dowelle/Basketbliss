@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Poppins:wght@200;400;700;900&display=swap');
+
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+.additem{
+    background-color: #fff;
+    padding:2rem;
+    height:100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+.additem h1{
+    font-family: 'Poppins';
+    font-size: 3em;
+    font-weight: 900;
+    color:#474F7B;
+    margin-bottom: 3rem;
+}
+.additem-left, .additem-right{
+    width:50%;
+    border:solid 1px #474F7B;
+}
+.additem-left{
+    flex-wrap: nowrap;
+}
+.additem-right{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 60%;
+}
+.additem-left h2{
+    color:#474F7B;
+}
+.main-container{
+    display: flex;
+    gap:1rep;
+}
+
+.name-stocks{
+    display: flex;
+    gap:1rem;
+}
+
+.detail-container{
+    display: flex;
+    flex-direction: column;
+    width:50%;
+}
+.detail-container label{
+    color:#474F7B;
+    font-weight: 600;
+}
+.detail-container input{
+    border-radius: 0;
+    border:solid 1px #474F7B;
+}
+.textarea{
+    width:100%;
+}
+.images-below{
+    display: flex;
+}
+.images-below img{
+    width: 23.3%;   
+}
+.image-main{
+    width: 15%;
+    /* aspect-ratio: 3/2; */
+}
+/* .images-container{
+    display: flex;
+    flex-direction: column;
+    width:100%;
+}
+.images-bottom{
+    display: flex;
+    gap:.25rem;
+}
+.images-bottom img{
+    width:33%;
+}
+.per-label textarea{
+    width:100%;
+    border:solid 1px #474F7B;
+    resize: none;
+}
+
+.main-additems{
+    display: flex;
+    justify-content: space-between;
+    gap:1rem;
+    width:100%
+
+}
+.per-label{
+    display:flex;
+
+    gap:1rem;
+
+}
+.per-label label{
+    color:#474F7B;
+    font-weight: 600;
+}
+.per-label input{
+    border:solid 1px #474F7B;
+    border-radius: 0;
+} */
