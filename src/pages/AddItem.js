@@ -12,6 +12,7 @@ function AddItem() {
         <div className="additem-left">
           <h2>Post a Product:</h2>
           <div className="name-stocks">
+            
             <div className="detail-container">
               <label>Product name:</label>
               <input type="text"  />
@@ -21,14 +22,25 @@ function AddItem() {
               <label>Product stock:</label>
               <input type="number"  />
             </div>
+
+          {/* <div className='texarea-container'>
             <div className="textarea">
               <label>Product Description:</label>
               <textarea></textarea>
             </div>
+          </div> */}
 
           </div>
+          <div className='texarea-container'>
+            <div className="textarea">
+              <label>Product Description:</label>
+              <textarea></textarea>
+            </div>
+          </div>
         </div>
+        
         <div className="additem-right">
+        <label>Product picture:</label>
           <img className="image-main" src={ Dress1 }/>
           <div className="images-below">
             <img src={ Dress1 }/>
