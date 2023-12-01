@@ -9,7 +9,6 @@
     background-color: #fff;
     padding:2rem;
     height:100vh;
-
     display: flex;
     flex-direction: column;
 }
@@ -21,8 +20,10 @@
     margin-bottom: 3rem;
 }
 .additem-left, .additem-right{
-    width:50%;
-    border:solid 1px #474F7B;
+    width:60%;
+    margin-left: 5%;
+    /* border:solid 1px #474F7B; */
+    
 }
 .additem-left{
     flex-wrap: nowrap;
@@ -31,14 +32,20 @@
     display:flex;
     flex-direction: column;
     justify-content: center;
-    width: 60%;
+    width: 40%;
+    margin-top: 2rem;
+    gap: .24rem;
+}
+.additem-right label{
+    color:#474F7B;
+    font-weight: 600;
 }
 .additem-left h2{
     color:#474F7B;
 }
 .main-container{
     display: flex;
-    gap:1rep;
+    /* gap:1rep; */
 }
 
 .name-stocks{
@@ -49,7 +56,7 @@
 .detail-container{
     display: flex;
     flex-direction: column;
-    width:50%;
+    width:40%;
 }
 .detail-container label{
     color:#474F7B;
@@ -59,17 +66,34 @@
     border-radius: 0;
     border:solid 1px #474F7B;
 }
+.texarea-container{
+    display: flex;
+    flex-direction: row;
+    margin-top: 20%;
+}
 .textarea{
-    width:100%;
+    display: flex;
+    flex-direction: column;
+    color: #474F7B;
+    font-weight: 600;
+    width: 120%;
+    /* height: 50%; */
+}
+.textarea textarea{
+    border: solid 1px #474F7B;
+    height: 10rem;
+    resize: none;
 }
 .images-below{
     display: flex;
+    gap: .25rem;
 }
 .images-below img{
-    width: 23.3%;   
+    width: 17.1%;   
+    /* gap:  2.25rem; */
 }
 .image-main{
-    width: 15%;
+    width: 52.9%;
     /* aspect-ratio: 3/2; */
 }
 /* .images-container{

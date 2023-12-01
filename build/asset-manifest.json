@@ -1,19 +1,24 @@
 {
   "files": {
-    "main.css": "/static/css/main.4035ab1b.css",
-    "main.js": "/static/js/main.5cf3f8b3.js",
+    "main.css": "/static/css/main.045e7f6d.css",
+    "main.js": "/static/js/main.8578d4e3.js",
+    "static/media/landing-left.svg": "/static/media/landing-left.7ef3065140e4f8acc95c25bf4ecde3d6.svg",
+    "static/media/glamshades.jpg": "/static/media/glamshades.724f67d81c00d2548649.jpg",
+    "static/media/bg-input.jpg": "/static/media/bg-input.4108a79627cd34063108.jpg",
     "static/media/jacket-nobg.png": "/static/media/jacket-nobg.6d9dfe29e388d5edad17.png",
     "static/media/shoes-nobg.png": "/static/media/shoes-nobg.5815c17a7cda2be70d71.png",
     "static/media/dress-nobg.png": "/static/media/dress-nobg.dd0cb54ba064b22c5ca2.png",
     "static/media/pants-nobg.png": "/static/media/pants-nobg.3b9965be5d8a7123acfb.png",
     "static/media/shoes.jpg": "/static/media/shoes.98c1f12f37c09f2f8a2e.jpg",
-    "static/media/instagram.png": "/static/media/instagram.26a151221517dc71f3e6.png",
+    "static/media/dress1.jpg": "/static/media/dress1.9dd35846f54a3dedb845.jpg",
+    "static/media/plant2.svg": "/static/media/plant2.2f79cdd25ad4d6114f07cdbcebc47b63.svg",
+    "static/media/plant.svg": "/static/media/plant.2033bf5f57b9f07be317c296ebe03ac4.svg",
     "index.html": "/index.html",
-    "main.4035ab1b.css.map": "/static/css/main.4035ab1b.css.map",
-    "main.5cf3f8b3.js.map": "/static/js/main.5cf3f8b3.js.map"
+    "main.045e7f6d.css.map": "/static/css/main.045e7f6d.css.map",
+    "main.8578d4e3.js.map": "/static/js/main.8578d4e3.js.map"
   },
   "entrypoints": [
-    "static/css/main.4035ab1b.css",
-    "static/js/main.5cf3f8b3.js"
+    "static/css/main.045e7f6d.css",
+    "static/js/main.8578d4e3.js"
   ]
 }
