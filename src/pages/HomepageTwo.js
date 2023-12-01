@@ -1,5 +1,5 @@
-import React from 'react';
-import{ Link } from 'react-router-dom';
+import {useState}from 'react';
+import{ Link, useNavigate } from 'react-router-dom';
 import './HomepageTwo.css';
 
 import Order from '../assets/cart.png'
@@ -9,14 +9,24 @@ import Out from '../assets/out.png'
 
 import ProductCard from '../components/ProductCard';
 import Footer from '../components/Footer';
+import {signOutUser} from '../services/firebaseActions'
 
 function HomepageTwo() {
+  const navigate = useNavigate()
+
+  const signOutMerchant = () => {
+            signOutUser().then((res) => {
+                if(res) {
+                    navigate('/')
+                }
+            })
+        }
   return (
     <div className="HomepageTwo">
-        <div className="intro">
+        {/* <div className="intro">
             <h1>Glamshades</h1>
             <p>Glamorous Shades of Liptints</p>
-        </div>
+        </div> */}
         <nav>
           <Link className="nav-button">
           <img src={ analytics }/>
@@ -25,17 +35,17 @@ function HomepageTwo() {
 
           <Link className="nav-button">
           <img src={ analytics }/>
-              Analytics
+              Items
+          </Link>
+
+          <Link to='/EditProfile' className="nav-button">
+          <img src={ analytics }/>
+              Edit Profile
           </Link>
 
           <Link className="nav-button">
-          <img src={ analytics }/>
-              Analytics
-          </Link>
-
-          <Link className="nav-button">
-          <img src={ analytics }/>
-              Analytics
+          <img src={ analytics } onClick={signOutMerchant}/>
+            Log Out
           </Link>
         </nav>
 
@@ -43,23 +53,23 @@ function HomepageTwo() {
           <div className="top-bar">
             <h1>Glamshades</h1>
             <div className="top-bar-links">
+            <input placeholder="Search items..."/>
               <Link className="link-container">My cart<img src={ Order }/> </Link>
               <Link className="link-container">My order<img src={ Cart }/> </Link>
-              <button className="link-container">Sign out <img src={ Out } /> </button>
+              <button className="link-container" onClick={signOutMerchant}>Sign out <img src={ Out } /> </button>
             </div>
           </div>
 
-          <div className="sort">
-            <input placeholder="Search items..."/>
-            <div className="sort-buttons">
-              <button>All</button>
-              <button>Popular</button>
-              <button>Lowest</button>
-              <button>Highest</button>
-            </div>
-          </div>
           <div className="product-section">
-            <h1>My products</h1>
+            <div className="sort">
+              <h1>My products</h1>
+              <div className="sort-buttons">
+                <button>All</button>
+                <button>Popular</button>
+                <button>Lowest</button>
+                <button>Highest</button>
+              </div>
+            </div>
             <div className="product-container">
               <ProductCard/>
               <ProductCard/>

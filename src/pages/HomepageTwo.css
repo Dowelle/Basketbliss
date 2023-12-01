@@ -6,7 +6,8 @@
 }
 .intro{
     height:100vh;
-    background-image: url(../assets/bgsample.jpg);
+    background-image: url(../assets/glamshades.jpg);
+    filter: brightness(75%);
     background-position: center;
     background-size: cover;
 
@@ -15,6 +16,9 @@
     gap:1rem;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 0 5px gray;
+
+
 }
 
 .intro h1{
@@ -62,7 +66,7 @@ nav{
 }
 .product-section{
     background-color: #fff;
-    padding:0 1.5rem;
+    padding:0 1.25rem;
 }
 .top-bar{
     display: flex;
@@ -71,6 +75,8 @@ nav{
     align-items: center;
     position: sticky;
     top:0;
+
+    width:100%;
 
 }
 .top-bar h1{
@@ -88,6 +94,10 @@ nav{
     height:10vh;
 
 }
+/* .top-bar-links input{
+    border: solid 1px black;
+    width:25%;
+} */
 .top-bar-links button{
     color:#474F7B;
 }
@@ -97,27 +107,25 @@ nav{
     gap:.5em;
     background: none;
     color:#474F7B;
+    white-space: nowrap;
 }
 .sort{
     display: flex;
-    justify-content: center;
+    align-items: center;
     gap:1rem;
-    padding:1rem 0;
+    height:max-content;
 }
 .sort-buttons{
     display: flex;
     gap:1rem;
 }
-.sort input{
-    border: solid 1px black;
-    width:25%;
-}
 .sort-buttons button{
     background:none;
     border:solid 1px #474F7B;
-    padding:.5rem 1rem;
+
     color:#474F7B;
     width:5rem;
+    padding:.25rem;
 }
 
 .product-section{
@@ -128,7 +136,7 @@ nav{
     background-color: #ececec;
 }
 
-.product-section h1{
+.sort h1{
     font-size: 2em;
     color:#474F7B;
 }   

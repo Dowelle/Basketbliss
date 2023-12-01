@@ -47,6 +47,10 @@ function LandingTwo() {
   const handleToggleRegister = () => {
     setIsOpenRegister(!isOpenRegister);
   };
+
+  const handleKeyUp = (e) => {
+    console.log(e)
+  }
   
   const handleRegisterEmailValueChange = (e) => {
     setRegisterEmail(e.target.value)
@@ -60,7 +64,6 @@ function LandingTwo() {
     setRegisterConfirmationPassword(e.target.value)
     setAuthMessage("")
   }
-  
   const handleLoginEmailValueChange = (e) => {
     setLoginEmail(e.target.value)
     setAuthMessage("")
@@ -114,7 +117,7 @@ function LandingTwo() {
             <div className="inputs">
               <input placeholder='Enter your email' type="email" value={loginEmail} onChange={handleLoginEmailValueChange}/>
               <input placeholder='Enter your password' type="password" value={loginPassword} onChange={handleLoginPasswordValueChange}/>
-              <button onClick={loginMerchant}>Submit</button>
+              <button onKeyUp={handleKeyUp} onClick={loginMerchant}>Submit</button>
             </div>
         </div>
         <div className="LandingMiddle">
