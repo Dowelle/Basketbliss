@@ -38,7 +38,7 @@ function App() {
           {/* <Route path="/Homepage" element={<Homepage businessName={businessName} setBusinessName={setBusinessName}/>} /> */}
           <Route path="/HomePage" element={<HomepageTwo/>}/>
           <Route path="/UserView" element={<UserView businessName={businessName} setBusinessName={setBusinessName}/>} />
-          <Route path="/ProductPage" element={<ProductPage/>} />
+          <Route path="/" element={<ProductPage/>} />
           <Route path="/EditProfile" element={<EditProfile/>} />
         </Routes>
       </Router>

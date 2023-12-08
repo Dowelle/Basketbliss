@@ -4,9 +4,9 @@
     margin:0;
     box-sizing: border-box;
 }
-html{
+/* html{
     background-color: #474F7B;
-}
+} */
 .LandingTwo{
     height:100vh;
     background-color: #DAF0F7;
@@ -40,7 +40,7 @@ html{
     font-weight: 900;
     font-size: 2.25em;
 
-    color:#474F7B;
+    color:c;
     transform: translateX(-100vw) ;
     animation:appear-plant 1000ms ease forwards 2200ms;
 
