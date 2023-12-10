@@ -69,7 +69,7 @@
 .texarea-container{
     display: flex;
     flex-direction: row;
-    margin-top: 20%;
+    /* margin-top: 20%; */
 }
 .textarea{
     display: flex;
@@ -96,42 +96,96 @@
     width: 52.9%;
     /* aspect-ratio: 3/2; */
 }
-/* .images-container{
+.file-inputs{
     display: flex;
-    flex-direction: column;
-    width:100%;
-}
-.images-bottom{
-    display: flex;
-    gap:.25rem;
-}
-.images-bottom img{
-    width:33%;
-}
-.per-label textarea{
-    width:100%;
-    border:solid 1px #474F7B;
-    resize: none;
-}
-
-.main-additems{
-    display: flex;
-    justify-content: space-between;
     gap:1rem;
-    width:100%
-
 }
-.per-label{
-    display:flex;
-
-    gap:1rem;
-
+.addVariation{
+    margin: .5rem 0;
+    padding:.5rem 1rem;
+    background-color: #474F7B;
+    color:#fff;
 }
-.per-label label{
+.addVariation:active{
+    scale:.9;
+}
+.variations{
+    display: flex;
+    justify-content: left;
+    gap:.5rem;
+    flex-wrap: wrap;
+}
+.input-variation{
+    display: flex;
+    align-items: center;
+    gap:.5rem;
+    
+}
+.input-variation label{
     color:#474F7B;
-    font-weight: 600;
 }
-.per-label input{
-    border:solid 1px #474F7B;
-    border-radius: 0;
-} */
+.input-variation input{
+    border: solid 1px #474F7B;
+    width:10rem;
+}
+.variation-remove{
+    padding:.5rem 1rem;
+    background-color: rgb(255, 73, 73);
+    color:#f8f8f8;
+}
+.variation-remove:active{
+    scale:.9;
+}
+.input-images h3{
+    width:100%;
+    background-color: #474F7B;
+    color:#fff;
+    padding:.25rem 0 .25rem .5rem;
+    margin: .5rem 0;
+}
+input[type="file"]{
+    color:#474F7B;
+}
+.addProduct{
+    margin-top: 2rem;
+    padding:.5rem 1rem;
+    background-color: #474F7B;
+    color:#fff;
+}
+.addProduct:active{
+    scale:.9;
+}
+@media(max-width:412px){
+    .additem{
+        padding:1rem .5rem;
+    }
+    .additem h1{
+        font-size: 2.5em;
+    }
+    .main-container{
+        flex-direction: column;
+    }
+    .additem-left,
+    .additem-right{
+        width:100%;
+        margin-left: 0;
+    }
+    .additem-right{
+        flex-direction: column;
+    }
+    .additem-right label{
+        display: none;
+    }
+    .image-main{
+        width:80%;
+        height:80%;
+        margin:0 auto;
+
+    }
+    .images-below{
+        flex-direction: row;
+    }
+    .images-below img{
+        width:33.3%;
+    }
+}

@@ -25,7 +25,7 @@ function ProductPage() {
         <div className="product-page-descriptions">
           <h2 className="latest">GLAMSHADES</h2>
           <h1>Your <span>Shop</span>, Your <span>Rules</span>:</h1>
-          <p>This is a very beautiful dress made with cotton and love. It was wear by me of course sino pa ba bilihin niyo na mura pa</p>
+          <p>This is a very beautiful dress made with cotton and love. It was wore by me of course sino pa ba bilihin niyo na mura pa</p>
           <div className="product-page-descriptions-button">
             <button><img src={ cart2 }/>  Add to Cart</button>
             <button><img src={ checkout }/>  Buy Now</button>
@@ -40,12 +40,13 @@ function ProductPage() {
           <img src={dress1} />
           <img src={dress1} />
           <img src={dress1} />
-          <img src={dress1} />
         </div>
 
         <div className="product-page-price">
-          <h3>Product name</h3>
+          <h3>Product name:</h3>
           <p>₱420.69</p>
+          <h3>Stocks:</h3>
+          <p>129</p>
         </div>
 
       </div>
