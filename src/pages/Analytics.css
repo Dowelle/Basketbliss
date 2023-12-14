@@ -1,0 +1,88 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+.Analytics{
+    min-height:100vh;
+    background-color:#DAF0F7;
+    padding:.75rem;
+}
+.Analytics h1{
+    color:#474F7B;
+    margin-bottom: 1rem;
+}
+.orders h2{
+    color:#474F7B;
+    margin: 1rem 0 .5rem 0;
+}
+.analytics-container{
+    display: flex;
+    gap:.75rem;
+    justify-content: space-between;
+}
+.analytics-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #474F7B;
+    gap:.5rem;
+    padding:.5rem;
+    width: 20vw;
+    border-radius: 20px;
+}
+.analytics-details-top{
+    display: flex;
+    justify-content: space-evenly;
+    width:100%;
+    align-items: center;
+    color:#fff;
+}
+.analytics-details-top p{
+    font-size: 1.25em;
+    font-weight: 600;
+}
+.analytics-details p{
+    color:#fff;
+}
+.analytics-value{
+    font-size: 2.5em;
+    font-weight: bolder;
+}
+.analytics-details-top img{
+    width:40px;
+}
+td{
+    color:#474F7B;
+}
+table{
+    width:100%;
+    border-collapse: collapse;
+    outline: solid 1px #474F7B;
+}
+th{
+    background-color: #474F7B;
+    color:#fff;
+}
+th, td{
+    text-align: center;
+    padding:.5rem;
+}
+select{
+    background-color: #474F7B;
+    color:#fff;
+    padding:.5rem;
+}
+option{
+    background-color: #fff;
+    color:#474F7B;
+}
+.cancel-order{
+    background-color: rgb(255, 59, 59);
+    color:#fff;
+}
+.order-id{
+    text-decoration: underline;
+    cursor: pointer;
+}

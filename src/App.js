@@ -16,6 +16,7 @@ import LandingTwo from './pages/LandingTwo';
 import ProductPage from './pages/ProductPage';
 import EditProfile from './pages/EditProfile';
 import AddItem from './pages/AddItem';
+import Analytics from './pages/Analytics';
 
 function App() {
   const [businessName, setBusinessName] = useState('')
@@ -27,7 +28,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/LandingTwo" element={<LandingTwo />} />
+          <Route path="/" element={<LandingTwo />} />
           <Route path="/Landing" element={<Landing />} />
 
           <Route path="/AddItem" element={ <AddItem/> }/>
@@ -38,8 +39,9 @@ function App() {
           {/* <Route path="/Homepage" element={<Homepage businessName={businessName} setBusinessName={setBusinessName}/>} /> */}
           <Route path="/HomePage" element={<HomepageTwo/>}/>
           <Route path="/UserView" element={<UserView businessName={businessName} setBusinessName={setBusinessName}/>} />
-          <Route path="/" element={<ProductPage/>} />
+          <Route path="/ProductPage" element={<ProductPage/>} />
           <Route path="/EditProfile" element={<EditProfile/>} />
+          <Route path="/Analytics" element={<Analytics/>} />
         </Routes>
       </Router>
     </div>

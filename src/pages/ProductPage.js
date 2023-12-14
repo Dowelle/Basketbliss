@@ -43,10 +43,38 @@ function ProductPage() {
         </div>
 
         <div className="product-page-price">
-          <h3>Product name:</h3>
-          <p>₱420.69</p>
-          <h3>Stocks:</h3>
-          <p>129</p>
+          <div className="sizes-container">
+            <label className='sizes-label' for="sizes">Sizes: </label>
+            <div className="variation-sizes">
+              <div className="product-size">
+                <input type="radio" name="sizes" />
+                <label >Small</label>
+                
+              </div>
+
+              <div className="product-size">
+                <input type="radio" name="sizes" />
+                <label >Medium</label>
+                
+              </div>
+
+              <div className="product-size">
+                <input type="radio" name="sizes" />
+                <label >Large</label>
+                
+              </div>
+            </div>
+          </div>
+          <div className="price-container">
+          <label className='sizes-label' for="sizes">Product size: </label>
+            <p>₱420.69</p>
+          </div>
+
+          <div className="price-container">
+          <label className='sizes-label' for="sizes">Product stocks:</label>
+            <p>69</p>
+          </div>
+
         </div>
 
       </div>

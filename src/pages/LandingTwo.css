@@ -29,6 +29,9 @@
         clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     }
 }
+.h1{
+    color:#333;
+}
 .title_container{
     display: flex;
     justify-content: space-between;

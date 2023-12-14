@@ -113,7 +113,7 @@ function LandingTwo() {
   return (
     <div className="LandingTwo">
         <div className="title_container">
-            <h1>BASKETBLISS</h1>
+            <h1 style={{color:"#333"}}>BASKETBLISS</h1>
             <div className="inputs">
               <input placeholder='Enter your email' type="email" value={loginEmail} onChange={handleLoginEmailValueChange}/>
               <input placeholder='Enter your password' type="password" value={loginPassword} onChange={handleLoginPasswordValueChange}/>
