@@ -1,4 +1,5 @@
 import {useState, useEffect}from 'react';
+import {useState, useEffect}from 'react';
 import{ Link, useNavigate } from 'react-router-dom';
 import './HomepageTwo.css';
 
@@ -11,7 +12,7 @@ import ProductCard from '../components/ProductCard';
 import Footer from '../components/Footer';
 import {getMerchantDetails, signOutUser} from '../services/firebaseActions'
 
-function HomepageTwo({merchantDetails}) {
+function HomepageTwo({setCertainState, merchantDetails}) {
   const [products, setProducts] = useState([])
 
   const navigate = useNavigate()
@@ -19,24 +20,33 @@ function HomepageTwo({merchantDetails}) {
   const signOutMerchant = () => {
             signOutUser().then((res) => {
                 if(res) {
+                  setCertainState('MerchantAddress', '');
+                  setCertainState('MerchantEmail', '');
+                  setCertainState('MerchantFacebookLink', '');
+                  setCertainState('MerchantInstagramLink', '');
+                  setCertainState('MerchantName', '');
+                  setCertainState('MerchantNumber', '');
+                  setCertainState('MerchantPageLink', null)
+                  setCertainState('MerchantTagline', '');
+                  setCertainState('MerchantTiktokLink', '');
                     navigate('/')
                 }
             })
         }
 
-  useEffect(() => {
-    const merchantId = sessionStorage.uid;
+  // useEffect(() => {
+  //   const merchantId = sessionStorage.uid;
 
-    getMerchantDetails(merchantId).then((res) => {
-      console.log(res)
-      if(res) {
-        if(res.products){
-          console.log(Object.entries(res.products.mapValue.fields.productName.mapValue.fields))
+  //   getMerchantDetails(merchantId).then((res) => {
+  //     console.log(res)
+  //     if(res) {
+  //       if(res.products){
+  //         console.log(Object.entries(res.products.mapValue.fields.productName.mapValue.fields))
 
-        }
-      }
-    })
-  }, [])
+  //       }
+  //     }
+  //   })
+  // }, [])
 
   return (
     <div className="HomepageTwo">
@@ -50,6 +60,7 @@ function HomepageTwo({merchantDetails}) {
               Analytics
           </Link>
 
+          <Link className="nav-button" to='/AddItem'>
           <Link className="nav-button" to='/AddItem'>
           <img src={ analytics }/>
               Items
@@ -68,6 +79,7 @@ function HomepageTwo({merchantDetails}) {
 
         <section className="product-section">
           <div className="top-bar">
+            <h1>{merchantDetails.merchantName}</h1>
             <h1>{merchantDetails.merchantName}</h1>
             <div className="top-bar-links">
             <input placeholder="Search items..."/>
@@ -100,6 +112,11 @@ function HomepageTwo({merchantDetails}) {
             </div>
           </div>
         </section>
+        <Footer merchantDetails={merchantDetails}/>
+        
+        <div>
+          test
+        </div>
         <Footer merchantDetails={merchantDetails}/>
         
         <div>

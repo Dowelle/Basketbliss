@@ -1,15 +1,16 @@
 import {useState, useEffect} from 'react'
 import './LandingTwo.css'
 import { Link, redirect, useNavigate } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
 
-import { logInMerchantWithEmailAndPassword, signUpMerchantWithEmailAndPassword } from '../services/firebaseActions'
+import { getMerchantDetails, logInMerchantWithEmailAndPassword, signUpMerchantWithEmailAndPassword } from '../services/firebaseActions'
 
 import LandingPic from '../assets/landing-left.svg'
 import Plant from '../assets/plant.svg'
 import Plant2 from '../assets/plant2.svg'
 import LandingMiddle_inner from '../components/LandingMiddle_inner'
 
-function LandingTwo({setMerchantDetails}) {
+function LandingTwo({setCertainState, merchantDetails}) {
   const [isOpenSignin, setIsOpenSignin] = useState(true);
   const [isOpenLogin, setIsOpenLogin] = useState(true);
   const [isOpenRegister, setIsOpenRegister] = useState(true);
@@ -57,6 +58,15 @@ function LandingTwo({setMerchantDetails}) {
     if(e.code == "Enter") {
       signUpMerchant()
     }
+  const handleLoginKeyUp = (e) => {
+    if(e.code == "Enter") {
+      loginMerchant()
+    }
+  }
+  const handleRegisterKeyUp = (e) => {
+    if(e.code == "Enter") {
+      signUpMerchant()
+    }
   }
   
   const handleRegisterEmailValueChange = (e) => {
@@ -90,23 +100,60 @@ function LandingTwo({setMerchantDetails}) {
     signUpMerchantWithEmailAndPassword(registerEmail, registerPassword).then((response) => {
       console.log(response);
       if(response.uid) {
-        setMerchantDetails.setMerchantPageLink(response.uid)
+        getMerchantDetails(response.uid).then((res) => {
+          if(res) {
+            const {address, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = res.merchantDetails.mapValue.fields
+            console.log(pageLink)
+            setCertainState('MerchantAddress', address.stringValue);
+            setCertainState('MerchantEmail', email.stringValue);
+            setCertainState('MerchantFacebookLink', facebookLink.stringValue);
+            setCertainState('MerchantInstagramLink', instagramLink.stringValue);
+            setCertainState('MerchantName', name.stringValue);
+            setCertainState('MerchantNumber', number.stringValue);
+            setCertainState('MerchantPageLink', pageLink.stringValue);
+            setCertainState('MerchantTagline', tagline.stringValue);
+            setCertainState('MerchantTiktokLink', tiktokLink.stringValue);
+          }
+        })
       }
 
       if(!response.errorCode) {
-        navigate('/' + response.uid);
+        // navigate('/' + merchantDetails.merchantPageLink);
+        return;
       }
       
       setErrorCode(errorCode)
     })
   }
   const loginMerchant = () => {
-    logInMerchantWithEmailAndPassword(loginEmail, loginPassword).then(errorCode => {
-      if(!errorCode) {
-        navigate('/Homepage');
+    logInMerchantWithEmailAndPassword(loginEmail, loginPassword).then(response => {
+      if(response.uid) {
+        getMerchantDetails(response.uid).then((res) => {
+          if(res) {
+            const {address, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = res.merchantDetails.mapValue.fields
+
+            setCertainState('MerchantAddress', address.stringValue);
+            setCertainState('MerchantEmail', email.stringValue);
+            setCertainState('MerchantFacebookLink', facebookLink.stringValue);
+            setCertainState('MerchantInstagramLink', instagramLink.stringValue);
+            setCertainState('MerchantName', name.stringValue);
+            setCertainState('MerchantNumber', number.stringValue);
+            setCertainState('MerchantPageLink', pageLink.stringValue);
+            setCertainState('MerchantTagline', tagline.stringValue);
+            setCertainState('MerchantTiktokLink', tiktokLink.stringValue);
+            
+            return;
+          }
+        })
+      }
+
+      if(!response.errorCode) {
+        // navigate('/' + merchantDetails.merchantPageLink);
+        return;
       }
       
       setErrorCode(errorCode)
+    
     })
   }
   
@@ -119,7 +166,11 @@ function LandingTwo({setMerchantDetails}) {
     setIsCreate(true);
   };
   
-
+  useEffect(() => {
+    if(merchantDetails.merchantPageLink) {
+      navigate(`/${merchantDetails.merchantPageLink}`)
+    }
+  }, [merchantDetails.merchantPageLink])
 
 
   return (
@@ -128,6 +179,8 @@ function LandingTwo({setMerchantDetails}) {
             <h1 style={{color:"#333"}}>BASKETBLISS</h1>
             <div className="inputs">
               <input placeholder='Enter your email' type="email" value={loginEmail} onChange={handleLoginEmailValueChange}/>
+              <input placeholder='Enter your password' type="password" value={loginPassword} onKeyUp={handleLoginKeyUp} onChange={handleLoginPasswordValueChange}/>
+              <button  onClick={loginMerchant}>Submit</button>
               <input placeholder='Enter your password' type="password" value={loginPassword} onKeyUp={handleLoginKeyUp} onChange={handleLoginPasswordValueChange}/>
               <button  onClick={loginMerchant}>Submit</button>
             </div>
@@ -149,7 +202,9 @@ function LandingTwo({setMerchantDetails}) {
                     <input type="password" placeholder="Enter your password" value={registerPassword}
         onChange={handleRegisterPasswordValueChange}/>
                     <input type="password" placeholder="Enter your confirm" value={registerConfirmationPassword} onKeyUp={handleRegisterKeyUp}
+                    <input type="password" placeholder="Enter your confirm" value={registerConfirmationPassword} onKeyUp={handleRegisterKeyUp}
         onChange={handleRegisterConfirmationPasswordValueChange}/>
+        {authMessage && <p style={{color: 'red'}}>{authMessage}</p>}
         {authMessage && <p style={{color: 'red'}}>{authMessage}</p>}
                   {/* </div> */}
                   <div className="button-container">
