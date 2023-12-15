@@ -5,7 +5,7 @@ import Dress1 from '../assets/dress1.jpg'
 
 function ProductCard() {
   return (
-    <div classNames="products-container">
+    <div className="products-container">
         <div className="product">
             <img src={ Dress1 }/>
             <h2>₱299</h2>

@@ -2,6 +2,7 @@ import './App.css';
 import './services/firebase'
 
 import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
 import Cart from './pages/Cart'
@@ -18,6 +19,8 @@ import EditProfile from './pages/EditProfile';
 import AddItem from './pages/AddItem';
 import Analytics from './pages/Analytics';
 
+import { getAllMerchants, getMerchantDetails } from './services/firebaseActions';
+
 function App() {
   const [merchantName, setMerchantName] = useState('MerchantName')
   const [merchantTagline, setMerchantTagline] = useState('Honesty is the best policy')
@@ -32,31 +35,61 @@ function App() {
 
   console.log(merchantPageLink);
 
+  const setCertainState = (state, data) => {
+    switch(state){
+      case 'MerchantName':
+        setMerchantName(data);
+        break;
+      case 'MerchantTagline':
+        setMerchantTagline(data);
+        break;
+      case 'MerchantNumber':
+        setMerchantNumber(data);
+        break;
+      case 'MerchantAddress':
+        setMerchantAddress(data);
+        break;
+      case 'MerchantEmail':
+        setMerchantEmail(data);
+        break;
+      case 'MerchantFacebookLink':
+        setMerchantFacebookLink(data);
+        break;
+      case 'MerchantInstagramLink':
+        setMerchantInstagramLink(data);
+        break;
+      case 'MerchantTiktokLink':
+        setMerchantTiktokLink(data);
+        break;
+      case 'MerchantPageLink':
+        setMerchantPageLink(data);
+        break;
+      default:
+        console.log('Unknown State Case')
+    }
+  }
+
   const merchantDetails = {merchantName, merchantTagline, merchantNumber, merchantAddress, merchantEmail, merchantFacebookLink, merchantInstagramLink, merchantTiktokLink, merchantPageLink}
-  const setMerchantDetails = {setMerchantName, setMerchantTagline, setMerchantNumber, setMerchantAddress, setMerchantEmail, setMerchantFacebookLink, setMerchantInstagramLink, setMerchantTiktokLink, setMerchantPageLink}
 
   useEffect(() => {
     const merchantId = sessionStorage.uid;
 
-    console.log(getAllMerchants());
-
     if(merchantId) {
       getMerchantDetails(merchantId).then(data => {
-      console.log(data);
-
         if(data) {
-            console.log('test');
-            setMerchantName(data.merchantName.stringValue)
-            setMerchantTagline(data.merchantTagline.stringValue)
-            setMerchantNumber(data.merchantNumber.stringValue)
-            setMerchantAddress(data.merchantAddress.stringValue)
-            setMerchantEmail(data.merchantEmail.stringValue)
-            setMerchantFacebookLink(data.merchantFacebookLink.stringValue)
-            setMerchantInstagramLink(data.merchantInstagramLink.stringValue)
-            setMerchantTiktokLink(data.merchantTiktokLink.stringValue)
-            setMerchantPageLink(data.merchantName.stringValue)
+            const {address, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = data.merchantDetails.mapValue.fields
+            
+            setMerchantName(name.stringValue)
+            setMerchantTagline(tagline.stringValue)
+            setMerchantNumber(number.stringValue)
+            setMerchantAddress(address.stringValue)
+            setMerchantEmail(email.stringValue)
+            setMerchantFacebookLink(facebookLink.stringValue)
+            setMerchantInstagramLink(instagramLink.stringValue)
+            setMerchantTiktokLink(tiktokLink.stringValue)
+            setMerchantPageLink(name.stringValue)
         }
-    })
+      })
     }
 
 }, [])
@@ -65,7 +98,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<LandingTwo setMerchantDetails={setMerchantDetails}/>} />
+          <Route path="/" element={<LandingTwo setCertainState={setCertainState} merchantDetails={merchantDetails}/>} />
           <Route path="/Landing" element={<Landing />} />
 
           <Route path="/AddItem" element={ <AddItem/> }/>
@@ -73,7 +106,7 @@ function App() {
           <Route path="/Signin" element={<Signin/>}/>
           <Route path="/Login" element={<Registration/>} />
           <Route path="/Profile" element={<Profile/>} />
-          <Route path={merchantPageLink ? '/' + merchantPageLink : '/HomePage'} element={<HomepageTwo merchantDetails={merchantDetails}/>}/>
+          <Route path={merchantPageLink ? '/' + merchantPageLink : '/HomePage'} element={<HomepageTwo setCertainState={setCertainState} merchantDetails={merchantDetails}/>}/>
           <Route path="/UserView" element={<UserView/>} />
           <Route path="/ProductPage" element={<ProductPage/>} />
           <Route path="/EditProfile" element={<EditProfile/>} />
