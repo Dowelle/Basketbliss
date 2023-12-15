@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
 import './LandingTwo.css'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
 
 import { logInMerchantWithEmailAndPassword, signUpMerchantWithEmailAndPassword } from '../services/firebaseActions'
 
@@ -9,7 +9,7 @@ import Plant from '../assets/plant.svg'
 import Plant2 from '../assets/plant2.svg'
 import LandingMiddle_inner from '../components/LandingMiddle_inner'
 
-function LandingTwo() {
+function LandingTwo({setMerchantDetails}) {
   const [isOpenSignin, setIsOpenSignin] = useState(true);
   const [isOpenLogin, setIsOpenLogin] = useState(true);
   const [isOpenRegister, setIsOpenRegister] = useState(true);
@@ -48,8 +48,15 @@ function LandingTwo() {
     setIsOpenRegister(!isOpenRegister);
   };
 
-  const handleKeyUp = (e) => {
-    console.log(e)
+  const handleLoginKeyUp = (e) => {
+    if(e.code == "Enter") {
+      loginMerchant()
+    }
+  }
+  const handleRegisterKeyUp = (e) => {
+    if(e.code == "Enter") {
+      signUpMerchant()
+    }
   }
   
   const handleRegisterEmailValueChange = (e) => {
@@ -80,9 +87,14 @@ function LandingTwo() {
       return;
     }
     
-    signUpMerchantWithEmailAndPassword(registerEmail, registerPassword).then(errorCode => {
-      if(!errorCode) {
-        navigate('/Homepage');
+    signUpMerchantWithEmailAndPassword(registerEmail, registerPassword).then((response) => {
+      console.log(response);
+      if(response.uid) {
+        setMerchantDetails.setMerchantPageLink(response.uid)
+      }
+
+      if(!response.errorCode) {
+        navigate('/' + response.uid);
       }
       
       setErrorCode(errorCode)
@@ -116,8 +128,8 @@ function LandingTwo() {
             <h1 style={{color:"#333"}}>BASKETBLISS</h1>
             <div className="inputs">
               <input placeholder='Enter your email' type="email" value={loginEmail} onChange={handleLoginEmailValueChange}/>
-              <input placeholder='Enter your password' type="password" value={loginPassword} onChange={handleLoginPasswordValueChange}/>
-              <button onKeyUp={handleKeyUp} onClick={loginMerchant}>Submit</button>
+              <input placeholder='Enter your password' type="password" value={loginPassword} onKeyUp={handleLoginKeyUp} onChange={handleLoginPasswordValueChange}/>
+              <button  onClick={loginMerchant}>Submit</button>
             </div>
         </div>
         <div className="LandingMiddle">
@@ -136,9 +148,9 @@ function LandingTwo() {
                   {/* <div className="passwords"> */}
                     <input type="password" placeholder="Enter your password" value={registerPassword}
         onChange={handleRegisterPasswordValueChange}/>
-                    <input type="password" placeholder="Enter your confirm" value={registerConfirmationPassword}
+                    <input type="password" placeholder="Enter your confirm" value={registerConfirmationPassword} onKeyUp={handleRegisterKeyUp}
         onChange={handleRegisterConfirmationPasswordValueChange}/>
-        {authMessage && <p>{authMessage}</p>}
+        {authMessage && <p style={{color: 'red'}}>{authMessage}</p>}
                   {/* </div> */}
                   <div className="button-container">
                     <button onClick={signUpMerchant} style={{

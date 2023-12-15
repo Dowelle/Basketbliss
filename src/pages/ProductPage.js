@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import './ProductPage.css';
 
 import dress1 from '../assets/dress1.jpg';
@@ -6,6 +6,34 @@ import cart2 from '../assets/cart2.png';
 import checkout from '../assets/payment-method.png'
 
 function ProductPage() {
+  const [price, setPrice] = useState(100)
+  const [quantity, setQuantity] = useState(1)
+  const [selectedVariety, setSelectedVariety] = useState('small')
+  const handleQuantityValueChange = (e) => {
+    console.log(quantity)
+    setQuantity(e.target.value)
+
+  }
+  const handleSelectedVarietyChange = (e) => {
+    setSelectedVariety(e.target.value)
+  }
+  const addToCart = () => {
+    console.log(price)
+  } 
+  const [price, setPrice] = useState(100)
+  const [quantity, setQuantity] = useState(1)
+  const [selectedVariety, setSelectedVariety] = useState('small')
+  const handleQuantityValueChange = (e) => {
+    console.log(quantity)
+    setQuantity(e.target.value)
+
+  }
+  const handleSelectedVarietyChange = (e) => {
+    setSelectedVariety(e.target.value)
+  }
+  const addToCart = () => {
+    console.log(price)
+  } 
   return (
     <div className="ProductPage">
       <div className="product-page-container">

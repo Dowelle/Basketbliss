@@ -1,4 +1,4 @@
-import {useState}from 'react';
+import {useState, useEffect}from 'react';
 import{ Link, useNavigate } from 'react-router-dom';
 import './HomepageTwo.css';
 
@@ -9,9 +9,11 @@ import Out from '../assets/out.png'
 
 import ProductCard from '../components/ProductCard';
 import Footer from '../components/Footer';
-import {signOutUser} from '../services/firebaseActions'
+import {getMerchantDetails, signOutUser} from '../services/firebaseActions'
 
-function HomepageTwo() {
+function HomepageTwo({merchantDetails}) {
+  const [products, setProducts] = useState([])
+
   const navigate = useNavigate()
 
   const signOutMerchant = () => {
@@ -21,6 +23,21 @@ function HomepageTwo() {
                 }
             })
         }
+
+  useEffect(() => {
+    const merchantId = sessionStorage.uid;
+
+    getMerchantDetails(merchantId).then((res) => {
+      console.log(res)
+      if(res) {
+        if(res.products){
+          console.log(Object.entries(res.products.mapValue.fields.productName.mapValue.fields))
+
+        }
+      }
+    })
+  }, [])
+
   return (
     <div className="HomepageTwo">
         {/* <div className="intro">
@@ -33,7 +50,7 @@ function HomepageTwo() {
               Analytics
           </Link>
 
-          <Link className="nav-button">
+          <Link className="nav-button" to='/AddItem'>
           <img src={ analytics }/>
               Items
           </Link>
@@ -51,7 +68,7 @@ function HomepageTwo() {
 
         <section className="product-section">
           <div className="top-bar">
-            <h1>Glamshades</h1>
+            <h1>{merchantDetails.merchantName}</h1>
             <div className="top-bar-links">
             <input placeholder="Search items..."/>
               <Link className="link-container">My cart<img src={ Order }/> </Link>
@@ -83,7 +100,11 @@ function HomepageTwo() {
             </div>
           </div>
         </section>
-        <Footer/>
+        <Footer merchantDetails={merchantDetails}/>
+        
+        <div>
+          test
+        </div>
     </div>
   )
 }
