@@ -6,7 +6,7 @@ import Facebook from '../assets/facebook.png'
 import Tiktok from '../assets/tiktok.png'
 import Instagram from '../assets/instagram.png'
 
-function Footer() {
+function Footer({merchantDetails}) {
   return (
     <footer>
           <div className="social-container">
@@ -15,10 +15,10 @@ function Footer() {
             <img src={ Tiktok } />
           </div>
           <div className="footer-middle">
-            <p>#37 Nueva Ecija Street Brgy. Barretoo, Olongapo City</p>
+            <p>{merchantDetails.merchantAddress}</p>
             <div className="contact-container">
-              <div className="contact-footer"> <img src={Call} /> +123456789123 </div>
-              <div className="contact-footer"> <img src={Mail}/> mondowelle00@gmail.com</div>
+              <div className="contact-footer"> <img src={Call} /> {merchantDetails.merchantNumber} </div>
+              <div className="contact-footer"> <img src={Mail}/> {merchantDetails.merchantEmail}</div>
             </div>
           </div>
 
