@@ -61,7 +61,6 @@ function HomepageTwo({setCertainState, merchantDetails}) {
           </Link>
 
           <Link className="nav-button" to='/AddItem'>
-          <Link className="nav-button" to='/AddItem'>
           <img src={ analytics }/>
               Items
           </Link>

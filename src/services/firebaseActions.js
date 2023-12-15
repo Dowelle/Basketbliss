@@ -8,10 +8,7 @@ const auth = getAuth()
 export const signUpMerchantWithEmailAndPassword = (email, password) => {
   const tempEmail = email.split('@')
   const merchantEmail = tempEmail[0] + '-merchant@' + tempEmail[1]
-  const tempEmail = email.split('@')
-  const merchantEmail = tempEmail[0] + '-merchant@' + tempEmail[1]
 	
-	return createUserWithEmailAndPassword(auth, merchantEmail, password).then((userCredential) => {
 	return createUserWithEmailAndPassword(auth, merchantEmail, password).then((userCredential) => {
     // Signed up
     const user = userCredential.user;
@@ -35,9 +32,7 @@ export const signUpMerchantWithEmailAndPassword = (email, password) => {
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message.split('').splice(0, 15).join('');
-    const errorMessage = error.message.split('').splice(0, 15).join('');
     
-    return {errorCode};
     return {errorCode};
   });
 }
@@ -48,7 +43,6 @@ export const logInMerchantWithEmailAndPassword = (email, password) => {
 
   console.log(merchantEmail)
   
-  return signInWithEmailAndPassword(auth, merchantEmail, password).then((userCredential) => {
   return signInWithEmailAndPassword(auth, merchantEmail, password).then((userCredential) => {
     // Signed in
     const user = userCredential.user;

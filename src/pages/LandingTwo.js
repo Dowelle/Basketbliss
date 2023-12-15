@@ -49,23 +49,14 @@ function LandingTwo({setCertainState, merchantDetails}) {
     setIsOpenRegister(!isOpenRegister);
   };
 
-  const handleLoginKeyUp = (e) => {
-    if(e.code == "Enter") {
-      loginMerchant()
-    }
-  }
   const handleRegisterKeyUp = (e) => {
     if(e.code == "Enter") {
       signUpMerchant()
     }
+  }
   const handleLoginKeyUp = (e) => {
     if(e.code == "Enter") {
       loginMerchant()
-    }
-  }
-  const handleRegisterKeyUp = (e) => {
-    if(e.code == "Enter") {
-      signUpMerchant()
     }
   }
   
@@ -202,9 +193,7 @@ function LandingTwo({setCertainState, merchantDetails}) {
                     <input type="password" placeholder="Enter your password" value={registerPassword}
         onChange={handleRegisterPasswordValueChange}/>
                     <input type="password" placeholder="Enter your confirm" value={registerConfirmationPassword} onKeyUp={handleRegisterKeyUp}
-                    <input type="password" placeholder="Enter your confirm" value={registerConfirmationPassword} onKeyUp={handleRegisterKeyUp}
         onChange={handleRegisterConfirmationPasswordValueChange}/>
-        {authMessage && <p style={{color: 'red'}}>{authMessage}</p>}
         {authMessage && <p style={{color: 'red'}}>{authMessage}</p>}
                   {/* </div> */}
                   <div className="button-container">
