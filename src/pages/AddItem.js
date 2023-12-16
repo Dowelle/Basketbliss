@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { addMerchantProduct } from '../services/firebaseActions';
+import Nav from '../components/Nav'
 
 import './AddItem.css';
 import Dress1 from '../assets/dress1.jpg';
@@ -47,6 +48,7 @@ function AddItem() {
   return (
     <div className="additem">
       <h1>ADMIN PANEL</h1>
+      <Nav/>
       <div className="main-container">
         <div className="additem-left">
           <h2>Post a Product:</h2>

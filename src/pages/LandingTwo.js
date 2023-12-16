@@ -1,7 +1,6 @@
 import {useState, useEffect} from 'react'
 import './LandingTwo.css'
 import { Link, redirect, useNavigate } from 'react-router-dom';
-import { Link, redirect, useNavigate } from 'react-router-dom';
 
 import { getMerchantDetails, logInMerchantWithEmailAndPassword, signUpMerchantWithEmailAndPassword } from '../services/firebaseActions'
 
@@ -172,8 +171,8 @@ function LandingTwo({setCertainState, merchantDetails}) {
               <input placeholder='Enter your email' type="email" value={loginEmail} onChange={handleLoginEmailValueChange}/>
               <input placeholder='Enter your password' type="password" value={loginPassword} onKeyUp={handleLoginKeyUp} onChange={handleLoginPasswordValueChange}/>
               <button  onClick={loginMerchant}>Submit</button>
-              <input placeholder='Enter your password' type="password" value={loginPassword} onKeyUp={handleLoginKeyUp} onChange={handleLoginPasswordValueChange}/>
-              <button  onClick={loginMerchant}>Submit</button>
+              {/* <input placeholder='Enter your password' type="password" value={loginPassword} onKeyUp={handleLoginKeyUp} onChange={handleLoginPasswordValueChange}/>
+              <button  onClick={loginMerchant}>Submit</button> */}
             </div>
         </div>
         <div className="LandingMiddle">

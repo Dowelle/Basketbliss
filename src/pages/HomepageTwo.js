@@ -1,14 +1,15 @@
-import {useState, useEffect}from 'react';
+
 import {useState, useEffect}from 'react';
 import{ Link, useNavigate } from 'react-router-dom';
 import './HomepageTwo.css';
 
 import Order from '../assets/cart.png'
 import Cart from '../assets/order.png'
-import analytics from '../assets/analysis.png'
+
 import Out from '../assets/out.png'
 
 import ProductCard from '../components/ProductCard';
+import Nav from '../components/Nav'
 import Footer from '../components/Footer';
 import {getMerchantDetails, signOutUser} from '../services/firebaseActions'
 
@@ -54,32 +55,12 @@ function HomepageTwo({setCertainState, merchantDetails}) {
             <h1>Glamshades</h1>
             <p>Glamorous Shades of Liptints</p>
         </div> */}
-        <nav>
-          <Link className="nav-button">
-          <img src={ analytics }/>
-              Analytics
-          </Link>
-
-          <Link className="nav-button" to='/AddItem'>
-          <img src={ analytics }/>
-              Items
-          </Link>
-
-          <Link to='/EditProfile' className="nav-button">
-          <img src={ analytics }/>
-              Edit Profile
-          </Link>
-
-          <Link className="nav-button">
-          <img src={ analytics } onClick={signOutMerchant}/>
-            Log Out
-          </Link>
-        </nav>
+        <Nav/>
 
         <section className="product-section">
           <div className="top-bar">
             <h1>{merchantDetails.merchantName}</h1>
-            <h1>{merchantDetails.merchantName}</h1>
+            {/* <h1>{merchantDetails.merchantName}</h1> */}
             <div className="top-bar-links">
             <input placeholder="Search items..."/>
               <Link className="link-container">My cart<img src={ Order }/> </Link>
@@ -116,11 +97,11 @@ function HomepageTwo({setCertainState, merchantDetails}) {
         <div>
           test
         </div>
-        <Footer merchantDetails={merchantDetails}/>
+        {/* <Footer merchantDetails={merchantDetails}/>
         
         <div>
           test
-        </div>
+        </div> */}
     </div>
   )
 }

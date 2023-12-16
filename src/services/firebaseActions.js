@@ -1,6 +1,6 @@
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { getFirestore, doc, getDoc, getDocs, setDoc, updateDoc, collection} from "firebase/firestore"
-import { getFirestore, doc, getDoc, getDocs, setDoc, updateDoc, collection} from "firebase/firestore"
+// import { getFirestore, doc, getDoc, getDocs, setDoc, updateDoc, collection} from "firebase/firestore"
 
 const db = getFirestore();
 const auth = getAuth()

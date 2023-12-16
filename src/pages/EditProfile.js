@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { getMerchantDetails, updateMerchantDetails } from '../services/firebaseActions'
-
+import Nav from '../components/Nav'
 import {Link} from 'react-router-dom'
 
 function EditProfile({merchantDetails, setMerchantDetails}) {
@@ -54,12 +54,8 @@ function EditProfile({merchantDetails, setMerchantDetails}) {
 
   return (
     <div className="Edit-profile">
-        {/* Bale naiisip ko rito kung ano yung ininput niya na details is mababago yung details na nasa homepage
-            parang ganon din sa ginawa mo dati may nadagdag lang. Yung socials na mga input sa baba yun na yung gagamitin nating
-            href na ei-include sa footer nila. Naiisip ko pag bago pa lang yung user blank pa lang yung homepage? or lalagay tayong
-            default details na pang basketbliss? ikaw bahala kung san ka mas madadalian
-        
-        */}
+      <Nav/>
+
 
 
         <h1>Business Details</h1>

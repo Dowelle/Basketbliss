@@ -1,7 +1,7 @@
 import './App.css';
 import './services/firebase'
 
-import { useState, useEffect } from 'react'
+
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
@@ -18,6 +18,7 @@ import ProductPage from './pages/ProductPage';
 import EditProfile from './pages/EditProfile';
 import AddItem from './pages/AddItem';
 import Analytics from './pages/Analytics';
+import MyOrderUser from './pages/MyOrdersUser';
 
 import { getAllMerchants, getMerchantDetails } from './services/firebaseActions';
 
@@ -111,6 +112,7 @@ function App() {
           <Route path="/ProductPage" element={<ProductPage/>} />
           <Route path="/EditProfile" element={<EditProfile/>} />
           <Route path="/Analytics" element={<Analytics/>} />
+          <Route path="/MyOrderUser" element={<MyOrderUser/>} />
         </Routes>
       </Router>
     </div>
