@@ -94,6 +94,70 @@ nav{
     height:10vh;
 
 }
+.userAuth{
+    display: flex;
+    gap:.75rem;
+}
+.userAuth button{
+    border: solid 1px #474F7B;
+    padding:.5rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 350ms;
+}
+.userAuth button:hover{
+    scale:1.05;
+}
+.userAuth button:first-child{
+    background-color: #474F7B;
+    color:#fff;
+}
+/* YourComponent.css */
+.popup-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popup {
+    background-color: white;
+    padding: .5rem 1rem 1rem;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    gap:1.5rem;
+    width:50%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .popup button:nth-child(2){
+    background-color: #474F7B;
+    color:#fff;
+    width:50%;
+  }
+  .popup input{
+    border: solid 1px #474F7B;
+    border-bottom: .5rem;
+    width:75%;
+    margin:0 auto;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  
 /* .top-bar-links input{
     border: solid 1px black;
     width:25%;

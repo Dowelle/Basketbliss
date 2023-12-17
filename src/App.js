@@ -34,6 +34,8 @@ function App() {
   const [merchantPageLink, setMerchantPageLink] = useState(null)
   const [merchants, setMerchants] = useState([])
 
+  
+
   console.log(merchantPageLink);
 
   const setCertainState = (state, data) => {
@@ -100,7 +102,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LandingTwo setCertainState={setCertainState} merchantDetails={merchantDetails}/>} />
-          <Route path="/Landing" element={<Landing />} />
+          {/* <Route path="/Landing" element={<Landing />} /> */}
 
           <Route path="/AddItem" element={ <AddItem/> }/>
           <Route path="/Cart" element={ <Cart/> }/>
