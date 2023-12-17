@@ -9,7 +9,7 @@ import Customer from '../assets/customer.png';
 import Profit from '../assets/profit.png';
 import { getMerchantDetails } from '../services/firebaseActions';
 
-function Analytics({merchantDetails}) {
+function Analytics({setCertainState, merchantDetails}) {
   const [orders, setOrders] = useState([])
 
   useEffect(() => {

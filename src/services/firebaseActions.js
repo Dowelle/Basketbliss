@@ -24,7 +24,8 @@ export const signUpMerchantWithEmailAndPassword = (email, password) => {
         pageLink: tempEmail[0],
         facebookLink: '',
         tiktokLink: '',
-        instagramLink: ''
+        instagramLink: '',
+        reference: tempEmail[0]
       }
     })
 
@@ -85,6 +86,27 @@ export const signUpUserWithEmailAndPassword = (email, password, merchantName) =>
     const errorMessage = error.message.split('').splice(0, 15).join('');
     
     return {errorCode};
+  });
+}
+
+export const logInUserWithEmailAndPassword = (email, password, merchantName) => {
+  const tempEmail = email.split('@')
+  const merchantEmail = tempEmail[0] + `-${merchantName}@` + tempEmail[1]
+
+  console.log(merchantEmail)
+  
+  return signInWithEmailAndPassword(auth, merchantEmail, password).then((userCredential) => {
+    // Signed in
+    const user = userCredential.user;
+    
+    return {uid: user.uid}
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    
+    console.log(errorCode, errorMessage);
+    return errorCode;
   });
 }
 
