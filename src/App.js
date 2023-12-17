@@ -4,7 +4,7 @@ import './services/firebase'
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
-import Cart from './pages/Cart'
+import Checkout from './pages/Checkout'
 import Landing from './pages/Landing';
 import Signin from './pages/Signin';
 import Registration from './pages/Registration';
@@ -19,6 +19,7 @@ import AddItem from './pages/AddItem';
 import Analytics from './pages/Analytics';
 import MyOrderUser from './pages/MyOrdersUser';
 import UserHomepage from './pages/UserHomepage';
+import CartTwo from './pages/CartTwo';
 
 import { getAllMerchants, getMerchantDetails } from './services/firebaseActions';
 
@@ -76,6 +77,8 @@ function App() {
   useEffect(() => {
     const merchantId = sessionStorage.uid;
 
+    
+
     getAllMerchants(merchantId).then(collection => {
       const tempMerchants = []
 
@@ -108,8 +111,6 @@ function App() {
 
 }, [])
 
-console.log(merchants)
-
   return (
     <div className="App">
       <Router>
@@ -117,7 +118,7 @@ console.log(merchants)
           <Route path="/" element={<LandingTwo setCertainState={setCertainState} merchantDetails={merchantDetails}/>} />
           <Route path="/Landing" element={<Landing />} />
           <Route path={merchantPageLink ? '/' + merchantPageLink + '/AddItem': undefined} element={ <AddItem/> }/>
-          <Route path="/Cart" element={ <Cart/> }/>
+          {/* <Route path="/Cart" element={ <Cart/> }/> */}
           <Route path="/Signin" element={<Signin/>}/>
           <Route path="/Login" element={<Registration/>} />
           <Route path={"/Profile"} element={<Profile/>} />
@@ -138,7 +139,7 @@ console.log(merchants)
                 <Route
                   key={product.productName} // Add a unique key for each route
                   path={`/stores/${merchant.merchantDetails.pageLink}/${product.productName}`}
-                  element={<ProductPage product={product} />}
+                  element={<ProductPage merchantName={merchant.merchantDetails.name} product={product} />}
                 />
               ))
             ))
@@ -147,6 +148,8 @@ console.log(merchants)
           <Route path={merchantPageLink ? '/' + merchantPageLink + '/EditProfile' : undefined} element={<EditProfile setCertainState={setCertainState} merchantDetails={merchantDetails}/>} />
           <Route path={merchantPageLink ? '/' + merchantPageLink + '/Analytics': undefined} element={<Analytics merchantDetails={merchantDetails} />} />
           <Route path="/MyOrderUser" element={<MyOrderUser/>} />
+          <Route path="/Checkout" element={<Checkout/>} />
+          <Route path='/Cart' element={<CartTwo/>} />
         </Routes>
       </Router>
     </div>

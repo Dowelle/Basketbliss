@@ -38,6 +38,8 @@ function EditProfile({merchantDetails, setCertainState}) {
       modifiedMerchantDetails[`${newKey}`] = key[1]
     });
 
+    console.log(modifiedMerchantDetails);
+
     console.log(modifiedMerchantDetails)
 
     updateMerchantDetails(modifiedMerchantDetails, merchantId).then(response => {
@@ -79,7 +81,7 @@ function EditProfile({merchantDetails, setCertainState}) {
         <input type="text" placeholder="Enter your company's Tiktok link" value={merchantDetails.merchantTiktokLink} onChange={handleMerchantTiktokLinkChange}/>
 
         <button onClick={submitMerchantDetails}>Save</button>
-        <Link to={'/' + merchantDetails.merchantPageLink}>gO Back</Link>
+        <Link to={'/' + merchantDetails.merchantName}>gO Back</Link>
         
     </div>
   )

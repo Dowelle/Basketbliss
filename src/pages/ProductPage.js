@@ -1,42 +1,53 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import './ProductPage.css';
+
+import { getImageUrl } from '../services/firebaseActions';
 
 import dress1 from '../assets/dress1.jpg';
 import cart2 from '../assets/cart2.png';
 import checkout from '../assets/payment-method.png'
 
-function ProductPage() {
+function ProductPage({merchantName, product}) {
   const [price, setPrice] = useState(100)
   const [quantity, setQuantity] = useState(1)
   const [selectedVariety, setSelectedVariety] = useState('small')
+  const [productURLs, setProductURLs] = useState([])
+
   const handleQuantityValueChange = (e) => {
     console.log(quantity)
     setQuantity(e.target.value)
-
   }
+
   const handleSelectedVarietyChange = (e) => {
     setSelectedVariety(e.target.value)
-  } 
+  }
+
+  const merchantSplit = merchantName.split('').reverse()
+
+  useEffect(() => {
+    const fetchImageUrls = async () => {
+      const urls = await getImageUrl(product);
+      setProductURLs(urls);
+    };
+  
+    fetchImageUrls();
+  }, [product]);
+
   return (
     <div className="ProductPage">
       <div className="product-page-container">
       <div className="companyName">
-          <span>S</span>
-          <span>E</span>
-          <span>D</span>
-          <span>A</span>
-          <span>H</span>
-          <span>S</span>
-          <span>M</span>
-          <span>A</span>
-          <span>L</span>
-          <span>G</span>
+        {
+        merchantSplit.map(merchantLetter => (
+          <span>{merchantLetter}</span>
+        ))
+        }
         </div>
 
         <div className="product-page-descriptions">
-          <h2 className="latest">GLAMSHADES</h2>
+          <h2 className="latest">{merchantName}</h2>
           <h1>Your <span>Shop</span>, Your <span>Rules</span>:</h1>
-          <p>This is a very beautiful dress made with cotton and love. It was wore by me of course sino pa ba bilihin niyo na mura pa</p>
+          <p>{product.productDescription}</p>
           <div className="product-page-descriptions-button">
             <button><img src={ cart2 }/>  Add to Cart</button>
             <button><img src={ checkout }/>  Buy Now</button>
@@ -44,17 +55,19 @@ function ProductPage() {
         </div>
 
         <div className="product-page-mainpic">
-          <img src={dress1} />
+          <img src={productURLs[0] || dress1} />
         </div>
         
         <div className="product-page-subpics">
-          <img src={dress1} />
-          <img src={dress1} />
-          <img src={dress1} />
+          {
+            productURLs.map(picture => (
+              <img src={picture}/>
+            ))
+          }
         </div>
 
         <div className="product-page-price">
-          <div className="sizes-container">
+          {/* <div className="sizes-container">
             <label className='sizes-label' for="sizes">Sizes: </label>
             <div className="variation-sizes">
               <div className="product-size">
@@ -75,15 +88,15 @@ function ProductPage() {
                 
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="price-container">
-          <label className='sizes-label' for="sizes">Product size: </label>
-            <p>₱420.69</p>
+          <label className='sizes-label' for="sizes">Product Price: </label>
+            <p>₱{product.productPrice}</p>
           </div>
 
           <div className="price-container">
           <label className='sizes-label' for="sizes">Product stocks:</label>
-            <p>69</p>
+            <p>{product.productStock}</p>
           </div>
 
         </div>

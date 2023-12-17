@@ -14,7 +14,7 @@ function ProductCard({product}) {
     <div className="products-container">
         <div className="product">
             <img src={ productDetails.pictures ? productDetails.pictures[0] : ''}/>
-            <h2>{`₱${productDetails.productStock}`}</h2>
+            <h2>{`₱${productDetails.productPrice}`}</h2>
         </div>
     </div>
   )

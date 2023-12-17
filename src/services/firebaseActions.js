@@ -59,37 +59,34 @@ export const logInMerchantWithEmailAndPassword = (email, password) => {
   });
 }
 
-// export const signUpMerchantWithEmailAndPassword = (email, password) => {
-//   const tempEmail = email.split('@')
-//   const merchantEmail = tempEmail[0] + '-merchant@' + tempEmail[1]
-	
-// 	return createUserWithEmailAndPassword(auth, merchantEmail, password).then((userCredential) => {
-//     // Signed up
-//     const user = userCredential.user;
-    
-//     setDoc(doc(db, "merchants", user.uid), {
-//       merchantDetails: {
-//         name: tempEmail[0],
-//         number: '',
-//         email: '',
-//         tagline: '',
-//         address: '',
-//         pageLink: tempEmail[0],
-//         facebookLink: '',
-//         tiktokLink: '',
-//         instagramLink: ''
-//       }
-//     })
+export const signUpUserWithEmailAndPassword = (email, password, merchantName) => {
+  const tempEmail = email.split('@')
+  const merchantEmail = tempEmail[0] + `-${merchantName}@` + tempEmail[1]
 
-//     return {uid: user.uid}
-//   })
-//   .catch((error) => {
-//     const errorCode = error.code;
-//     const errorMessage = error.message.split('').splice(0, 15).join('');
+  console.log('run');
+	
+	return createUserWithEmailAndPassword(auth, merchantEmail, password).then((userCredential) => {
+    // Signed up
+    const user = userCredential.user;
     
-//     return {errorCode};
-//   });
-// }
+    setDoc(doc(db, "users", user.uid), {
+      userDetails: {
+        name: tempEmail[0],
+        number: '',
+        email: '',
+        address: '',
+      }
+    })
+
+    return {uid: user.uid}
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message.split('').splice(0, 15).join('');
+    
+    return {errorCode};
+  });
+}
 
 export const signOutUser = () => {
   console.log('signout')

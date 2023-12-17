@@ -13,6 +13,7 @@ function AddItem() {
   const [productName, setProductName] = useState('')
   const [productStock, setProductStock] = useState(0)
   const [productDescription, setProductDescription] = useState('')
+  const [productPrice, setProductPrice] = useState(0)
   const [pictures, setPictures] = useState([])
 
 
@@ -25,13 +26,14 @@ function AddItem() {
     const merchantId = sessionStorage.uid
 
     console.log(variations)
-    addMerchantProduct({productName, productStock, productDescription, variations, pictures: []}, pictures, merchantId).then((res) => {
+    addMerchantProduct({productName, productStock, productDescription, productPrice, variations, pictures: []}, pictures, merchantId).then((res) => {
       if(res) {
         setProductName('')
         setProductDescription('')
         setProductStock(0)
         setVariations([])
         setPictures([])
+        setProductPrice(0)
       }
       return;
     })
@@ -54,8 +56,9 @@ function AddItem() {
   const handlePicturesChange = (e) => {
     setPictures(e.target.files)
   }
-
-  useEffect(() => console.log(pictures), [pictures])
+  const handleProductPriceChange = (e) => {
+    setProductPrice(e.target.value)
+  }
 
   return (
     <div className="additem">
@@ -72,6 +75,10 @@ function AddItem() {
             <div className="detail-container">
               <label>Product stock:</label>
               <input type="number" value={productStock} onChange={handleProductStockChange}/>
+            </div>
+            <div className="detail-container">
+              <label>Product price:</label>
+              <input type="number" value={productPrice} onChange={handleProductPriceChange}/>
             </div>
           </div>
           <div>

@@ -4,13 +4,12 @@ import { Link } from "react-router-dom";
 import ProductCard from '../components/ProductCard';
 import Footer from '../components/Footer';
 
-import { getImageUrl } from "../services/firebaseActions";
+import { getImageUrl, signOutUser, signUpUserWithEmailAndPassword } from "../services/firebaseActions";
 
 import Order from '../assets/cart.png'
 import Cart from '../assets/order.png'
 import analytics from '../assets/analysis.png'
 import Out from '../assets/out.png'
-
 const UserHomepage = ({merchantProducts, merchantDetails}) => {
   
   const [isAlreadyUser, setIsAlreadyUser] = useState(false)
@@ -58,7 +57,12 @@ const UserHomepage = ({merchantProducts, merchantDetails}) => {
     setSignUpConfirmationPassword(e.target.value)
   }
   const [products, setProducts] = useState([])
-
+    
+    useEffect(() => {
+      if(sessionStorage.uid) {
+        setIsAlreadyUser(true)
+      }
+    })
     useEffect(() => {
         const fetchData = async () => {
           if (merchantProducts) {
@@ -87,39 +91,31 @@ const UserHomepage = ({merchantProducts, merchantDetails}) => {
         if(signUpConfirmationPassword !== signUpPassword) {
           return;
         }
-
-        console.log(window.location.href)
-
         
-        
-        // signUpUserWithEmailAndPassword(signUpEmail, signUpPassword).then((response) => {
-        //   console.log(response);
-        //   if(response.uid) {
-        //     getMerchantDetails(response.uid).then((res) => {
-        //       if(res) {
-        //         const {address, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = res.merchantDetails
-        //         console.log(pageLink)
-        //         setCertainState('MerchantAddress', address);
-        //         setCertainState('MerchantEmail', email);
-        //         setCertainState('MerchantFacebookLink', facebookLink);
-        //         setCertainState('MerchantInstagramLink', instagramLink);
-        //         setCertainState('MerchantName', name);
-        //         setCertainState('MerchantNumber', number);
-        //         setCertainState('MerchantPageLink', pageLink);
-        //         setCertainState('MerchantTagline', tagline);
-        //         setCertainState('MerchantTiktokLink', tiktokLink);
-        //       }
-        //     })
-        //   }
+        const merchantName = merchantDetails.name
+
+        signUpUserWithEmailAndPassword(signUpEmail, signUpPassword, merchantName).then((response) => {
+          console.log(response);
+          if(response.uid) {
+            setIsAlreadyUser(true)
+          }
     
-        //   if(!response.errorCode) {
-        //     // navigate('/' + merchantDetails.merchantPageLink);
-        //     return;
-        //   }
+          if(!response.errorCode) {
+            // navigate('/' + merchantDetails.merchantPageLink);
+            return;
+          }
           
-        //   setErrorCode(errorCode)
-        // })
+          // setErrorCode(errorCode)
+        })
       }
+
+      const signOut = () => {
+        signOutUser().then((res) => {
+            if(res) {
+              setIsAlreadyUser(false)
+            }
+        })
+    }
     return (
         <div className="HomepageTwo">
             <section className="product-section">
@@ -128,13 +124,13 @@ const UserHomepage = ({merchantProducts, merchantDetails}) => {
                 {isAlreadyUser ? (
             <div className="top-bar-links">
               <input placeholder="Search items..." />
-              <Link className="link-container">
+              <Link className="link-container" to='/Cart'>
                 My cart<img src={Order} alt="Order Icon" />
               </Link>
               <Link className="link-container">
                 My order<img src={Cart} alt="Cart Icon" />
               </Link>
-              <button className="link-container">
+              <button onClick={signOut} className="link-container">
                 Sign out <img src={Out} alt="Sign Out Icon" />
               </button>
             </div>
@@ -164,7 +160,7 @@ const UserHomepage = ({merchantProducts, merchantDetails}) => {
                   <input placeholder="Enter your email" type="email" value={signUpEmail} onChange={handleSignUpEmailChange}/>
                   <input required placeholder="Enter your password" type="password" value={signUpPassword} onChange={handleSignUpPasswordChange}/>
                   <input placeholder="Confirm your password" type="password" value={signUpConfirmationPassword} onChange={handleSignUpConfirmationPasswordChange}/>
-                  <button>Submit</button>
+                  <button onClick={signUpUser}>Submit</button>
                 </div>
               </div>
             )}
