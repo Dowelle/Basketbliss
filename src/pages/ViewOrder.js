@@ -8,7 +8,7 @@ function ViewOrder() {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
-    navigate(-1); // This function navigates back to the previous page in the history
+    navigate(-1);
   };
   return (
     <div className="ViewOrder">
