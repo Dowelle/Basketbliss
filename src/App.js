@@ -22,6 +22,7 @@ import UserHomepage from './pages/UserHomepage';
 import CartTwo from './pages/CartTwo';
 
 import { getAllMerchants, getMerchantDetails } from './services/firebaseActions';
+import ViewOrder from './pages/ViewOrder';
 
 function App() {
   const [merchantName, setMerchantName] = useState('MerchantName')
@@ -150,6 +151,7 @@ function App() {
           <Route path="/MyOrderUser" element={<MyOrderUser/>} />
           <Route path="/Checkout" element={<Checkout/>} />
           <Route path='/Cart' element={<CartTwo/>} />
+          <Route path='/ViewOrder' element={<ViewOrder/>} />
         </Routes>
       </Router>
     </div>

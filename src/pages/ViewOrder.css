@@ -1,0 +1,44 @@
+
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+.ViewOrder{
+    background-color: #DAF0F7;
+    min-height: 100vh;
+    padding:1rem;
+}
+.ViewOrder h1{
+    color: #474F7B;
+    font-size: 2.75em;
+
+}
+.container-order{
+    display: flex;
+    justify-content: center;
+    gap:.75rem;
+    flex-wrap: wrap;
+}
+.order-card{
+    width:max-content;
+    display: flex;
+    gap:1rem;
+    justify-content: space-between;
+    align-items: center;
+    padding:1rem;
+    border:solid 2px #474F7B;
+    border-radius: 0 50px;
+    font-family: 'Poppins';
+    color:#474F7B;
+
+}
+.order-card img{
+    width:10rem;
+    border-radius: 0 50px;
+}
+.order-details{
+    display: flex;
+    flex-direction: column;
+    gap:.5rem;
+}
