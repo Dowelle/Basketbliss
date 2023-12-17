@@ -10,7 +10,7 @@ import Out from '../assets/out.png'
 import ProductCard from '../components/ProductCard';
 import Nav from '../components/Nav'
 import Footer from '../components/Footer';
-import {getMerchantDetails, signOutUser, getImageUrl} from '../services/firebaseActions'
+import { getMerchantDetails, signOutUser, getImageUrl } from '../services/firebaseActions'
 
 function HomepageTwo({setCertainState, merchantDetails}) {
   const [products, setProducts] = useState([])

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import ProductCard from '../components/ProductCard';
 import Footer from '../components/Footer';
 
-import { getImageUrl, signOutUser, signUpUserWithEmailAndPassword } from "../services/firebaseActions";
+import { getImageUrl, logInUserWithEmailAndPassword, signOutUser, signUpUserWithEmailAndPassword } from "../services/firebaseActions";
 
 import Order from '../assets/cart.png'
 import Cart from '../assets/order.png'
@@ -46,6 +46,8 @@ const UserHomepage = ({merchantProducts, merchantDetails}) => {
   const [signUpEmail, setSignUpEmail] = useState('')
   const [signUpPassword, setSignUpPassword] = useState('')
   const [signUpConfirmationPassword, setSignUpConfirmationPassword] = useState('')
+  const [loginEmail, setLoginEmail] = useState('')
+  const [loginPassword, setLoginPassword] = useState('')
 
   const handleSignUpEmailChange = (e) => {
     setSignUpEmail(e.target.value)
@@ -56,6 +58,14 @@ const UserHomepage = ({merchantProducts, merchantDetails}) => {
   const handleSignUpConfirmationPasswordChange = (e) => {
     setSignUpConfirmationPassword(e.target.value)
   }
+
+  const handleLoginEmailChange = (e) => {
+    setLoginEmail(e.target.value)
+  }
+  const handleLoginPasswordChange = (e) => {
+    setLoginPassword(e.target.value)
+  }
+
   const [products, setProducts] = useState([])
     
     useEffect(() => {
@@ -91,8 +101,10 @@ const UserHomepage = ({merchantProducts, merchantDetails}) => {
         if(signUpConfirmationPassword !== signUpPassword) {
           return;
         }
+
+        console.log(merchantDetails)
         
-        const merchantName = merchantDetails.name
+        const merchantName = merchantDetails.reference
 
         signUpUserWithEmailAndPassword(signUpEmail, signUpPassword, merchantName).then((response) => {
           console.log(response);
@@ -101,11 +113,25 @@ const UserHomepage = ({merchantProducts, merchantDetails}) => {
           }
     
           if(!response.errorCode) {
+            return;
+          }
+        })
+      }
+
+      const logInUser = () => {
+        const merchantName = merchantDetails.reference
+
+        logInUserWithEmailAndPassword(loginEmail, loginPassword, merchantName).then(response => {
+          if(response.uid) {
+            setIsAlreadyUser(true)
+          }
+
+          
+          if(!response.errorCode) {
             // navigate('/' + merchantDetails.merchantPageLink);
             return;
           }
           
-          // setErrorCode(errorCode)
         })
       }
 
@@ -173,9 +199,9 @@ const UserHomepage = ({merchantProducts, merchantDetails}) => {
                   </button>
                   {/* Login Popup Content */}
                   <h1>Login</h1>
-                  <input placeholder="Enter your email" type="email" />
-                  <input required placeholder="Enter your password" type="password" />
-                  <button>Submit</button>
+                  <input placeholder="Enter your email" type="email" value={loginEmail} onChange={handleLoginEmailChange} />
+                  <input required placeholder="Enter your password" type="password" value={loginPassword} onChange={handleLoginPasswordChange}/>
+                  <button onClick={logInUser}>Submit</button>
                 </div>
               </div>
             )}
