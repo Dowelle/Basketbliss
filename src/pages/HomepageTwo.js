@@ -32,12 +32,12 @@ function HomepageTwo({setCertainState, merchantDetails}) {
 
   const openSignup = () => {
     setSignupPopupVisible(true);
-    setLoginPopupVisible(false); // Close login popup if open
+    setLoginPopupVisible(false); 
   };
 
   const openLogin = () => {
     setLoginPopupVisible(true);
-    setSignupPopupVisible(false); // Close signup popup if open
+    setSignupPopupVisible(false); 
   };
 
   const closePopup = () => {
