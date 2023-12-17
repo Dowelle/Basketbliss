@@ -1,4 +1,3 @@
-
 import {useState, useEffect}from 'react';
 import{ Link, useNavigate } from 'react-router-dom';
 import './HomepageTwo.css';
@@ -11,42 +10,9 @@ import Out from '../assets/out.png'
 import ProductCard from '../components/ProductCard';
 import Nav from '../components/Nav'
 import Footer from '../components/Footer';
-import {getMerchantDetails, signOutUser} from '../services/firebaseActions'
+import {getMerchantDetails, signOutUser, getImageUrl} from '../services/firebaseActions'
 
 function HomepageTwo({setCertainState, merchantDetails}) {
-
-  const [isAlreadyUser, setIsAlreadyUser] = useState(false)
-  const [popupVisible, setPopupVisible] = useState(false);
-
-  const openPopup = () => {
-    setPopupVisible(true);
-  };
-
-  const [signupPopupVisible, setSignupPopupVisible] = useState(false);
-  const [loginPopupVisible, setLoginPopupVisible] = useState(false);
-
-  const openSignupPopup = () => {
-    setSignupPopupVisible(true);
-  };
-
-
-  const openSignup = () => {
-    setSignupPopupVisible(true);
-    setLoginPopupVisible(false); 
-  };
-
-  const openLogin = () => {
-    setLoginPopupVisible(true);
-    setSignupPopupVisible(false); 
-  };
-
-  const closePopup = () => {
-    setPopupVisible(false);
-    setSignupPopupVisible(false);
-    setLoginPopupVisible(false);
-  };
-  
-
   const [products, setProducts] = useState([])
 
   const navigate = useNavigate()
@@ -68,19 +34,35 @@ function HomepageTwo({setCertainState, merchantDetails}) {
             })
         }
 
-  // useEffect(() => {
-  //   const merchantId = sessionStorage.uid;
+  useEffect(() => {
+    const merchantId = sessionStorage.uid;
 
-  //   getMerchantDetails(merchantId).then((res) => {
-  //     console.log(res)
-  //     if(res) {
-  //       if(res.products){
-  //         console.log(Object.entries(res.products.mapValue.fields.productName.mapValue.fields))
+    getMerchantDetails(merchantId).then(async (res) => {
+      if(res) {
+        const tempProducts = res.products
 
-  //       }
-  //     }
-  //   })
-  // }, [])
+        console.log(tempProducts);
+
+        if (tempProducts) {
+          try {
+            const updatedProducts = await Promise.all(tempProducts.map(async (tempProduct) => {
+              if (tempProduct) {
+                const urls = await getImageUrl(tempProduct);
+                tempProduct.pictures = urls;
+                return tempProduct;
+              }
+            }));
+      
+            console.log(updatedProducts);
+            setProducts(updatedProducts);
+          } catch (error) {
+            // Handle errors
+            console.error("Error updating products:", error);
+          }
+        }
+      }
+    })
+  }, [])
 
   return (
     <div className="HomepageTwo">
@@ -88,75 +70,18 @@ function HomepageTwo({setCertainState, merchantDetails}) {
             <h1>Glamshades</h1>
             <p>Glamorous Shades of Liptints</p>
         </div> */}
-        <Nav/>
+        <Nav setCertainState={setCertainState} merchantDetails={merchantDetails}/>
 
         <section className="product-section">
-        <div className="top-bar">
-          <h1>{merchantDetails.merchantName}</h1>
-
-          {isAlreadyUser ? (
+          <div className="top-bar">
+            <h1>{merchantDetails.merchantName}</h1>
             <div className="top-bar-links">
-              <input placeholder="Search items..." />
-              <Link className="link-container">
-                My cart<img src={Order} alt="Order Icon" />
-              </Link>
-              <Link className="link-container">
-                My order<img src={Cart} alt="Cart Icon" />
-              </Link>
-              <button className="link-container" onClick={signOutMerchant}>
-                Sign out <img src={Out} alt="Sign Out Icon" />
-              </button>
+            <input placeholder="Search items..."/>
+              <Link className="link-container">My cart<img src={ Order }/> </Link>
+              <Link className="link-container">My order<img src={ Cart }/> </Link>
+              <button className="link-container" onClick={signOutMerchant}>Sign out <img src={ Out } /> </button>
             </div>
-          ) : (
-            <div className="userAuth">
-            <button onClick={openLogin}>Log in</button>
-            <button onClick={openSignup}>Sign up</button>
-            {popupVisible && (
-              <div className="popup-container">
-                <div className="popup">
-                  <button className="close-button" onClick={closePopup}>
-                    X
-                  </button>
-                  {/* Common Popup Content */}
-                  <h1>Common Popup Content</h1>
-                </div>
-              </div>
-            )}
-
-            {signupPopupVisible && (
-              <div className="popup-container">
-                <div className="popup">
-                  <button className="close-button" onClick={closePopup}>
-                    X
-                  </button>
-                  {/* Signup Popup Content */}
-                  <h1>Sign up</h1>
-                  <input placeholder="Enter your email" type="email" />
-                  <input required placeholder="Enter your password" type="password" />
-                  <input placeholder="Confirm your password" type="password" />
-                  <button>Submit</button>
-                </div>
-              </div>
-            )}
-
-            {loginPopupVisible && (
-              <div className="popup-container">
-                <div className="popup">
-                  <button className="close-button" onClick={closePopup}>
-                    X
-                  </button>
-                  {/* Login Popup Content */}
-                  <h1>Login</h1>
-                  <input placeholder="Enter your email" type="email" />
-                  <input required placeholder="Enter your password" type="password" />
-                  <button>Submit</button>
-                </div>
-              </div>
-            )}
           </div>
-        )}
-      </div>
-
 
           <div className="product-section">
             <div className="sort">
@@ -169,28 +94,11 @@ function HomepageTwo({setCertainState, merchantDetails}) {
               </div>
             </div>
             <div className="product-container">
-              <ProductCard/>
-              <ProductCard/>
-              <ProductCard/>
-              <ProductCard/>
-              <ProductCard/>
-              <ProductCard/>
-              <ProductCard/>
-              <ProductCard/>
-              <ProductCard/>
+              {products?.map(product => <ProductCard key={product.productName} product={product}/>) || 'No Items Found'}
             </div>
           </div>
         </section>
         <Footer merchantDetails={merchantDetails}/>
-        
-        <div>
-          test
-        </div>
-        {/* <Footer merchantDetails={merchantDetails}/>
-        
-        <div>
-          test
-        </div> */}
     </div>
   )
 }

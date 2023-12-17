@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { addMerchantProduct } from '../services/firebaseActions';
 import Nav from '../components/Nav'
@@ -13,6 +13,7 @@ function AddItem() {
   const [productName, setProductName] = useState('')
   const [productStock, setProductStock] = useState(0)
   const [productDescription, setProductDescription] = useState('')
+  const [pictures, setPictures] = useState([])
 
 
 
@@ -23,9 +24,15 @@ function AddItem() {
   const addProduct = () => {
     const merchantId = sessionStorage.uid
 
-    console.log(merchantId)
-    addMerchantProduct({productName, productStock, productDescription}, merchantId).then(() => {
-      console.log(`stop`)
+    console.log(variations)
+    addMerchantProduct({productName, productStock, productDescription, variations, pictures: []}, pictures, merchantId).then((res) => {
+      if(res) {
+        setProductName('')
+        setProductDescription('')
+        setProductStock(0)
+        setVariations([])
+        setPictures([])
+      }
       return;
     })
   }
@@ -44,6 +51,11 @@ function AddItem() {
   const handleProductDescriptionChange = (e) => {
     setProductDescription(e.target.value)
   }
+  const handlePicturesChange = (e) => {
+    setPictures(e.target.files)
+  }
+
+  useEffect(() => console.log(pictures), [pictures])
 
   return (
     <div className="additem">
@@ -91,7 +103,7 @@ function AddItem() {
           </div>
           <div className="input-images">
             <h3>Insert images(Insert at least 1 picture 4 max)</h3>
-            <input type="file" multiple/>
+            <input type="file" accept="image/*" onChange={handlePicturesChange} multiple/>
           </div>
           <button className="addProduct" onClick={addProduct}>Add product</button>
         </div>

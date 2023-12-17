@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Analytics.css'
 
 import Nav from '../components/Nav'
@@ -7,11 +7,21 @@ import Dashboard from '../assets/dashboard.png';
 import Order from '../assets/order-delivery.png';
 import Customer from '../assets/customer.png';
 import Profit from '../assets/profit.png';
+import { getMerchantDetails } from '../services/firebaseActions';
 
-function Analytics() {
+function Analytics({merchantDetails}) {
+  const [orders, setOrders] = useState([])
+
+  useEffect(() => {
+    const merchantId = sessionStorage.uid
+
+    getMerchantDetails(merchantId).then(data => {
+      setOrders(data.orders)
+    })
+  }, [])
   return (
     <div className="Analytics">
-      <Nav/>
+      <Nav merchantDetails={merchantDetails}/>
       <h1>Admin Dashboard</h1>
       <div className="analytics-container">
         <div className="analytics-details">
@@ -55,28 +65,32 @@ function Analytics() {
         <table>
           <tr>
             <th >Order ID</th>
-            <th>Order Name</th>
+            <th>Order Owner</th>
             <th>Price</th>
             <th>Expected Delivery</th>
             <th>Status</th>
           </tr>
+          {
+            orders ? orders.map(order => (
+            <tr>
+              <td className="order-id">{order.orderId}</td>
+              <td>{order.orderOwner}</td>
+              <td>P{order.orderPrice}</td>
+              <td>{order.orderPlaced}</td>
+              <td>
+                <select>
+                  <option>Order Placement</option>
+                  <option>Order Packing</option>
+                  <option>Order Shipped</option>
+                  <option>Out for Delivery</option>
+                  <option>Delivered</option>
+                  <option className="cancel-order">Cancel Order</option>
+                </select>
+              </td>
+            </tr>
+            )) :  <div>No Orders</div>
+          }
 
-          <tr>
-            <td className="order-id">42069</td>
-            <td>Dowelle Dayle Mon</td>
-            <td>P143</td>
-            <td> <input type="date" className="date"/> </td>
-            <td>
-              <select>
-                <option>Order Placement</option>
-                <option>Order Packing</option>
-                <option>Order Shipped</option>
-                <option>Out for Delivery</option>
-                <option>Delivered</option>
-                <option className="cancel-order">Cancel Order</option>
-              </select>
-            </td>
-          </tr>
 
           
         </table>
