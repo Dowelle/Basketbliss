@@ -92,17 +92,17 @@ function LandingTwo({setCertainState, merchantDetails}) {
       if(response.uid) {
         getMerchantDetails(response.uid).then((res) => {
           if(res) {
-            const {address, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = res.merchantDetails.mapValue.fields
+            const {address, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = res.merchantDetails
             console.log(pageLink)
-            setCertainState('MerchantAddress', address.stringValue);
-            setCertainState('MerchantEmail', email.stringValue);
-            setCertainState('MerchantFacebookLink', facebookLink.stringValue);
-            setCertainState('MerchantInstagramLink', instagramLink.stringValue);
-            setCertainState('MerchantName', name.stringValue);
-            setCertainState('MerchantNumber', number.stringValue);
-            setCertainState('MerchantPageLink', pageLink.stringValue);
-            setCertainState('MerchantTagline', tagline.stringValue);
-            setCertainState('MerchantTiktokLink', tiktokLink.stringValue);
+            setCertainState('MerchantAddress', address);
+            setCertainState('MerchantEmail', email);
+            setCertainState('MerchantFacebookLink', facebookLink);
+            setCertainState('MerchantInstagramLink', instagramLink);
+            setCertainState('MerchantName', name);
+            setCertainState('MerchantNumber', number);
+            setCertainState('MerchantPageLink', pageLink);
+            setCertainState('MerchantTagline', tagline);
+            setCertainState('MerchantTiktokLink', tiktokLink);
           }
         })
       }
@@ -120,17 +120,17 @@ function LandingTwo({setCertainState, merchantDetails}) {
       if(response.uid) {
         getMerchantDetails(response.uid).then((res) => {
           if(res) {
-            const {address, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = res.merchantDetails.mapValue.fields
+            const {address, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = res.merchantDetails
 
-            setCertainState('MerchantAddress', address.stringValue);
-            setCertainState('MerchantEmail', email.stringValue);
-            setCertainState('MerchantFacebookLink', facebookLink.stringValue);
-            setCertainState('MerchantInstagramLink', instagramLink.stringValue);
-            setCertainState('MerchantName', name.stringValue);
-            setCertainState('MerchantNumber', number.stringValue);
-            setCertainState('MerchantPageLink', pageLink.stringValue);
-            setCertainState('MerchantTagline', tagline.stringValue);
-            setCertainState('MerchantTiktokLink', tiktokLink.stringValue);
+            setCertainState('MerchantAddress', address);
+            setCertainState('MerchantEmail', email);
+            setCertainState('MerchantFacebookLink', facebookLink);
+            setCertainState('MerchantInstagramLink', instagramLink);
+            setCertainState('MerchantName', name);
+            setCertainState('MerchantNumber', number);
+            setCertainState('MerchantPageLink', pageLink);
+            setCertainState('MerchantTagline', tagline);
+            setCertainState('MerchantTiktokLink', tiktokLink);
             
             return;
           }
@@ -171,8 +171,6 @@ function LandingTwo({setCertainState, merchantDetails}) {
               <input placeholder='Enter your email' type="email" value={loginEmail} onChange={handleLoginEmailValueChange}/>
               <input placeholder='Enter your password' type="password" value={loginPassword} onKeyUp={handleLoginKeyUp} onChange={handleLoginPasswordValueChange}/>
               <button  onClick={loginMerchant}>Submit</button>
-              {/* <input placeholder='Enter your password' type="password" value={loginPassword} onKeyUp={handleLoginKeyUp} onChange={handleLoginPasswordValueChange}/>
-              <button  onClick={loginMerchant}>Submit</button> */}
             </div>
         </div>
         <div className="LandingMiddle">

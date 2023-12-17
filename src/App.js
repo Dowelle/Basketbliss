@@ -1,11 +1,10 @@
 import './App.css';
 import './services/firebase'
 
-
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
-import Cart from './pages/Cart'
+import Checkout from './pages/Checkout'
 import Landing from './pages/Landing';
 import Signin from './pages/Signin';
 import Registration from './pages/Registration';
@@ -19,6 +18,8 @@ import EditProfile from './pages/EditProfile';
 import AddItem from './pages/AddItem';
 import Analytics from './pages/Analytics';
 import MyOrderUser from './pages/MyOrdersUser';
+import UserHomepage from './pages/UserHomepage';
+import CartTwo from './pages/CartTwo';
 
 import { getAllMerchants, getMerchantDetails } from './services/firebaseActions';
 
@@ -33,8 +34,7 @@ function App() {
   const [merchantTiktokLink, setMerchantTiktokLink] = useState('johnraygloria')
   const [merchantPageLink, setMerchantPageLink] = useState(null)
   const [merchants, setMerchants] = useState([])
-
-  
+  const [merchantProducts, setMerchantProducts] = useState([])
 
   console.log(merchantPageLink);
 
@@ -77,20 +77,34 @@ function App() {
   useEffect(() => {
     const merchantId = sessionStorage.uid;
 
+    
+
+    getAllMerchants(merchantId).then(collection => {
+      const tempMerchants = []
+
+      collection.forEach(document => {
+        tempMerchants.push(document.data())
+      })
+
+      setMerchants(tempMerchants)
+    })
+
     if(merchantId) {
       getMerchantDetails(merchantId).then(data => {
         if(data) {
-            const {address, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = data.merchantDetails.mapValue.fields
+            const {address, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = data.merchantDetails
             
-            setMerchantName(name.stringValue)
-            setMerchantTagline(tagline.stringValue)
-            setMerchantNumber(number.stringValue)
-            setMerchantAddress(address.stringValue)
-            setMerchantEmail(email.stringValue)
-            setMerchantFacebookLink(facebookLink.stringValue)
-            setMerchantInstagramLink(instagramLink.stringValue)
-            setMerchantTiktokLink(tiktokLink.stringValue)
-            setMerchantPageLink(name.stringValue)
+            setMerchantName(name)
+            setMerchantTagline(tagline)
+            setMerchantNumber(number)
+            setMerchantAddress(address)
+            setMerchantEmail(email)
+            setMerchantFacebookLink(facebookLink)
+            setMerchantInstagramLink(instagramLink)
+            setMerchantTiktokLink(tiktokLink)
+            setMerchantPageLink(name)
+
+            setMerchantProducts(data.products)
         }
       })
     }
@@ -102,19 +116,40 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LandingTwo setCertainState={setCertainState} merchantDetails={merchantDetails}/>} />
-          {/* <Route path="/Landing" element={<Landing />} /> */}
-
-          <Route path="/AddItem" element={ <AddItem/> }/>
-          <Route path="/Cart" element={ <Cart/> }/>
+          <Route path="/Landing" element={<Landing />} />
+          <Route path={merchantPageLink ? '/' + merchantPageLink + '/AddItem': undefined} element={ <AddItem/> }/>
+          {/* <Route path="/Cart" element={ <Cart/> }/> */}
           <Route path="/Signin" element={<Signin/>}/>
           <Route path="/Login" element={<Registration/>} />
-          <Route path="/Profile" element={<Profile/>} />
-          <Route path={merchantPageLink ? '/' + merchantPageLink : '/HomePage'} element={<HomepageTwo setCertainState={setCertainState} merchantDetails={merchantDetails}/>}/>
-          <Route path="/UserView" element={<UserView/>} />
-          <Route path="/ProductPage" element={<ProductPage/>} />
-          <Route path="/EditProfile" element={<EditProfile/>} />
-          <Route path="/Analytics" element={<Analytics/>} />
+          <Route path={"/Profile"} element={<Profile/>} />
+          <Route path={merchantPageLink ? '/' + merchantPageLink : undefined} element={<HomepageTwo setCertainState={setCertainState} merchantDetails={merchantDetails} />}/>
+          {
+            merchants ? merchants.filter(merchant => merchant.merchantDetails.pageLink !== undefined).map(merchant => (
+              <Route
+                key={merchant.merchantDetails.pageLink} // Add a unique key for each route
+                path={`/stores/${merchant.merchantDetails.pageLink}`}
+                element={<UserHomepage merchantProducts={merchant.products} merchantDetails={merchant.merchantDetails} />}
+              />
+            ))
+            : null // Handle the case when merchants is falsy (e.g., not yet loaded)
+          }
+          {
+            merchants ? merchants.filter(merchant => merchant.merchantDetails.pageLink !== undefined).map(merchant => (
+              merchant.products?.map(product => (
+                <Route
+                  key={product.productName} // Add a unique key for each route
+                  path={`/stores/${merchant.merchantDetails.pageLink}/${product.productName}`}
+                  element={<ProductPage merchantName={merchant.merchantDetails.name} product={product} />}
+                />
+              ))
+            ))
+            : null // Handle the case when merchants is falsy (e.g., not yet loaded)
+          }
+          <Route path={merchantPageLink ? '/' + merchantPageLink + '/EditProfile' : undefined} element={<EditProfile setCertainState={setCertainState} merchantDetails={merchantDetails}/>} />
+          <Route path={merchantPageLink ? '/' + merchantPageLink + '/Analytics': undefined} element={<Analytics merchantDetails={merchantDetails} />} />
           <Route path="/MyOrderUser" element={<MyOrderUser/>} />
+          <Route path="/Checkout" element={<Checkout/>} />
+          <Route path='/Cart' element={<CartTwo/>} />
         </Routes>
       </Router>
     </div>

@@ -4,48 +4,59 @@ import { getMerchantDetails, updateMerchantDetails } from '../services/firebaseA
 import Nav from '../components/Nav'
 import {Link} from 'react-router-dom'
 
-function EditProfile({merchantDetails, setMerchantDetails}) {
+function EditProfile({merchantDetails, setCertainState}) {
   const handleMerchantNameChange = (e) => {
-    setMerchantDetails.setMerchantName(e.target.value)
+    setCertainState('MerchantName', e.target.value)
   }
   const handleMerchantTaglineChange = (e) => {
-    setMerchantDetails.setMerchantTagline(e.target.value)
+    setCertainState('MerchantTagline', e.target.value)
   }
   const handleMerchantNumberChange = (e) => {
-    setMerchantDetails.setMerchantNumber(e.target.value)
+    setCertainState('MerchantNumber', e.target.value)
   }
   const handleMerchantEmailChange = (e) => {
-    setMerchantDetails.setMerchantEmail(e.target.value)
+    setCertainState('MerchantEmail', e.target.value)
   }
   const handleMerchantFacebookLinkChange = (e) => {
-    setMerchantDetails.setMerchantFacebookLink(e.target.value)
+    setCertainState('MerchantFacebookLink', e.target.value)
   }
   const handleMerchantInstagramLinkChange = (e) => {
-    setMerchantDetails.setMerchantInstagramLink(e.target.value)
+    setCertainState('MerchantInstagramLink', e.target.value)
   }
   const handleMerchantTiktokLinkChange = (e) => {
-    setMerchantDetails.setMerchantTiktokLink(e.target.value)
+    setCertainState('MerchantTiktokLink', e.target.value)
   }
 
   const submitMerchantDetails = () => {
     const merchantId = sessionStorage.uid;
 
-    updateMerchantDetails(merchantDetails, merchantId).then(response => {
+    console.log(Object.entries(merchantDetails));
+    const modifiedMerchantDetails = {}
+
+    Object.entries(merchantDetails).forEach(key => {
+      const newKey = key[0].charAt(8).toLowerCase() + key[0].slice(9)
+      modifiedMerchantDetails[`${newKey}`] = key[1]
+    });
+
+    console.log(modifiedMerchantDetails);
+
+    console.log(modifiedMerchantDetails)
+
+    updateMerchantDetails(modifiedMerchantDetails, merchantId).then(response => {
       if(response) {
-        getMerchantDetails(merchantId).then(payload => {
-          if(payload) { 
-            console.log(payload)
-            if(payload.merchantName.stringValue !== 'MerchantName') {
-              console.log(`u`);
-              setMerchantDetails.setMerchantPageLink(payload.merchantName.stringValue)
-            }
-            setMerchantDetails.setMerchantName(payload.merchantName.stringValue)
-            setMerchantDetails.setMerchantTagline(payload.merchantTagline.stringValue)
-            setMerchantDetails.setMerchantNumber(payload.merchantNumber.stringValue)
-            setMerchantDetails.setMerchantEmail(payload.merchantEmail.stringValue)
-            setMerchantDetails.setMerchantFacebookLink(payload.merchantFacebookLink.stringValue)
-            setMerchantDetails.setMerchantInstagramLink(payload.merchantInstagramLink.stringValue)
-            setMerchantDetails.setMerchantTiktokLink(payload.merchantTiktokLink.stringValue)
+        getMerchantDetails(merchantId).then(res => {
+          if(res) {
+            const {address, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = res.merchantDetails
+
+            setCertainState('MerchantAddress', address);
+            setCertainState('MerchantEmail', email);
+            setCertainState('MerchantFacebookLink', facebookLink);
+            setCertainState('MerchantName', name);
+            setCertainState('MerchantNumber', number);
+            setCertainState('MerchantPageLink', pageLink)
+            setCertainState('MerchantTagline', tagline);
+            setCertainState('MerchantTiktokLink', tiktokLink);
+            setCertainState('MerchantInstagramLink', instagramLink);
           }
         })
       }
@@ -70,7 +81,7 @@ function EditProfile({merchantDetails, setMerchantDetails}) {
         <input type="text" placeholder="Enter your company's Tiktok link" value={merchantDetails.merchantTiktokLink} onChange={handleMerchantTiktokLinkChange}/>
 
         <button onClick={submitMerchantDetails}>Save</button>
-        <Link to={'/' + merchantDetails.merchantPageLink}>gO Back</Link>
+        <Link to={'/' + merchantDetails.merchantName}>gO Back</Link>
         
     </div>
   )

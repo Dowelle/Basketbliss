@@ -23,7 +23,7 @@ function Cart() {
           </div>
         </div>
       </div>
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   
 //   <header className='container_navbar'>

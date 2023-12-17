@@ -15,7 +15,7 @@ function Footer({merchantDetails}) {
             <img src={ Tiktok } />
           </div>
           <div className="footer-middle">
-            <p>{merchantDetails.merchantAddress}</p>
+            <p>{merchantDetails.address}</p>
             <div className="contact-container">
               <div className="contact-footer"> <img src={Call} /> {merchantDetails.merchantNumber} </div>
               <div className="contact-footer"> <img src={Mail}/> {merchantDetails.merchantEmail}</div>

@@ -67,6 +67,7 @@ nav{
 .product-section{
     background-color: #fff;
     padding:0 1.25rem;
+    min-height: 55.5vh;
 }
 .top-bar{
     display: flex;
