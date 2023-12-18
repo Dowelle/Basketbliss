@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import './ProductPage.css';
 
-import { getImageUrl } from '../services/firebaseActions';
+import { addToCart, getImageUrl } from '../services/firebaseActions';
 
 import dress1 from '../assets/dress1.jpg';
 import cart2 from '../assets/cart2.png';
@@ -20,6 +20,23 @@ function ProductPage({merchantName, product}) {
 
   const handleSelectedVarietyChange = (e) => {
     setSelectedVariety(e.target.value)
+  }
+
+  const addItemToCart = () => {
+    if(!sessionStorage.uid) {
+      alert('You need to login first.')
+      return;
+    }
+
+    const userId = sessionStorage.uid
+    const productId = product.id
+    const quantity = 1
+
+    addToCart(userId, productId, quantity).then(uploaded => {
+      if(uploaded) {
+        alert('Added To Cart Successfully')
+      }
+    })
   }
 
   const merchantSplit = merchantName.split('').reverse()
@@ -49,7 +66,7 @@ function ProductPage({merchantName, product}) {
           <h1>Your <span>Shop</span>, Your <span>Rules</span>:</h1>
           <p>{product.productDescription}</p>
           <div className="product-page-descriptions-button">
-            <button><img src={ cart2 }/>  Add to Cart</button>
+            <button onClick={addItemToCart}><img src={ cart2 }/>  Add to Cart</button>
             <button><img src={ checkout }/>  Buy Now</button>
           </div>
         </div>

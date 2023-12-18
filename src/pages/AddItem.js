@@ -8,7 +8,7 @@ import Dress1 from '../assets/dress1.jpg';
 import Footer from '../components/Footer';
 
 
-function AddItem() {
+function AddItem({setCertainState, merchantDetails}) {
   const [variations, setVariations] = useState([]);
   const [productName, setProductName] = useState('')
   const [productStock, setProductStock] = useState(0)
@@ -63,7 +63,7 @@ function AddItem() {
   return (
     <div className="additem">
       <h1>ADMIN PANEL</h1>
-      <Nav/>
+      <Nav setCertainState={setCertainState} merchantDetails={merchantDetails}/>
       <div className="main-container">
         <div className="additem-left">
           <h2>Post a Product:</h2>

@@ -2,15 +2,59 @@ import React, { useEffect, useState } from 'react'
 import './Analytics.css'
 
 import Nav from '../components/Nav'
+import ViewOrder from './ViewOrder';
 
 import Dashboard from '../assets/dashboard.png';
 import Order from '../assets/order-delivery.png';
 import Customer from '../assets/customer.png';
 import Profit from '../assets/profit.png';
-import { getMerchantDetails } from '../services/firebaseActions';
+import { getMerchantDetails, editOrderStatus, cancelUserOrder } from '../services/firebaseActions';
 
-function Analytics({setCertainState, merchantDetails}) {
+function Analytics({setCertainState, merchantProducts, merchantDetails, totalOrders}) {
   const [orders, setOrders] = useState([])
+  const [reload, setReload] = useState(false)
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
+  const setSelect = () => {
+    setSelectedOrder(null)
+  }
+
+  const viewComponent = () => {
+    console.log(merchantProducts);
+    return selectedOrder ? <ViewOrder merchantProducts={merchantProducts} setSelect={setSelect} order={selectedOrder} /> : null;
+  };
+
+  const cancelOrder = (orderId, userId) => {
+    const merchantId = sessionStorage.uid
+    cancelUserOrder(orderId, merchantId, userId).then(cancelled => {
+      if(cancelled) {
+        setReload(true)
+      }
+    })
+  }
+
+  const handleStatusChange = (e, orderId, userId) => {
+    const newStatus = e.target.value;
+
+    setOrders(prevOrders =>
+      prevOrders.map(order => {
+        if(order.orderId === orderId) {
+          return { ...order, status: newStatus } 
+        } else {
+          return order
+        }
+      }
+      )
+    );
+
+    const merchantId = sessionStorage.uid
+
+    editOrderStatus(orderId, newStatus, userId, merchantId).then(res => {
+      if(res) {
+        setReload(true)
+      }
+    })
+  };
 
   useEffect(() => {
     const merchantId = sessionStorage.uid
@@ -18,31 +62,34 @@ function Analytics({setCertainState, merchantDetails}) {
     getMerchantDetails(merchantId).then(data => {
       setOrders(data.orders)
     })
-  }, [])
+  }, [reload])
+
+  useEffect(() => setReload(false), [])
+
   return (
     <div className="Analytics">
-      <Nav merchantDetails={merchantDetails}/>
+      <Nav setCertainState={setCertainState} merchantDetails={merchantDetails}/>
       <h1>Admin Dashboard</h1>
       <div className="analytics-container">
         <div className="analytics-details">
           <div className="analytics-details-top">
-            <p>Traffic Today</p>  <img src={ Dashboard }/>
+            <p>Total Page Views</p>  <img src={ Dashboard }/>
           </div>
-          <p className='analytics-value'>420</p>
+          <p className='analytics-value'>{merchantDetails.merchantPageViews}</p>
         </div>
 
         <div className="analytics-details">
           <div className="analytics-details-top">
             <p>Total Customers</p>  <img src={ Customer }/>
           </div>
-          <p className='analytics-value'>420</p>
+          <p className='analytics-value'>{merchantDetails.merchantUsers}</p>
         </div>
 
         <div className="analytics-details">
           <div className="analytics-details-top">
-            <p>Orders Today</p>  <img src={ Order }/>
+            <p>Total Orders</p>  <img src={ Order }/>
           </div>
-          <p className='analytics-value'>420</p>
+          <p className='analytics-value'>{totalOrders}</p>
         </div>
 
         <div className="analytics-details">
@@ -69,23 +116,26 @@ function Analytics({setCertainState, merchantDetails}) {
             <th>Price</th>
             <th>Expected Delivery</th>
             <th>Status</th>
+            <th></th>
           </tr>
           {
             orders ? orders.map(order => (
             <tr>
-              <td className="order-id">{order.orderId}</td>
-              <td>{order.orderOwner}</td>
-              <td>P{order.orderPrice}</td>
-              <td>{order.orderPlaced}</td>
+              <td onClick={() => setSelectedOrder(order)} className="order-id">{order.id?.split('_')[0] + '...'}</td>
+              <td>{order.name}</td>
+              <td>P{order.total}</td>
+              <td>{order.datePlaced}</td>
               <td>
-                <select>
-                  <option>Order Placement</option>
-                  <option>Order Packing</option>
-                  <option>Order Shipped</option>
-                  <option>Out for Delivery</option>
-                  <option>Delivered</option>
-                  <option className="cancel-order">Cancel Order</option>
+                <select value={order.status} onChange={(e) => handleStatusChange(e, order.id, order.userId)}>
+                  <option value='Confirming Payment'>Confirming Payment</option>
+                  <option value='Order Paid'>Order Paid</option>
+                  <option value='Order Packing'>Order Packing</option>
+                  <option value='Order Shipped'>Order Shipped</option>
+                  {/* <option value='Received'>Received</option> */}
                 </select>
+              </td>
+              <td>
+                <button onClick={() => {cancelOrder(order.id, order.userId)}}className='delete-order'>Cancel Order</button>
               </td>
             </tr>
             )) :  <div>No Orders</div>
@@ -95,6 +145,8 @@ function Analytics({setCertainState, merchantDetails}) {
           
         </table>
       </div>
+
+      {viewComponent()}
     </div>
   )
 }
