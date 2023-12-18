@@ -3,12 +3,13 @@ import './EditProfile.css';
 
 import { getMerchantDetails, updateMerchantDetails } from '../services/firebaseActions';
 import Nav from '../components/Nav';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 import plant from '../assets/plant.svg'
 import plant2 from '../assets/plant2.svg'
 
 function EditProfile({merchantDetails, setCertainState}) {
+  const navigate = useNavigate()
   const handleMerchantNameChange = (e) => {
     setCertainState('MerchantName', e.target.value)
   }
@@ -34,7 +35,6 @@ function EditProfile({merchantDetails, setCertainState}) {
   const submitMerchantDetails = () => {
     const merchantId = sessionStorage.uid;
 
-    console.log(Object.entries(merchantDetails));
     const modifiedMerchantDetails = {}
 
     Object.entries(merchantDetails).forEach(key => {
@@ -42,15 +42,13 @@ function EditProfile({merchantDetails, setCertainState}) {
       modifiedMerchantDetails[`${newKey}`] = key[1]
     });
 
-    console.log(modifiedMerchantDetails);
-
-    console.log(modifiedMerchantDetails)
+    modifiedMerchantDetails.pageLink = modifiedMerchantDetails.name
 
     updateMerchantDetails(modifiedMerchantDetails, merchantId).then(response => {
       if(response) {
         getMerchantDetails(merchantId).then(res => {
           if(res) {
-            const {address, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = res.merchantDetails
+            const {address, users, pageViews, reference, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = res.merchantDetails
 
             setCertainState('MerchantAddress', address);
             setCertainState('MerchantEmail', email);
@@ -61,6 +59,11 @@ function EditProfile({merchantDetails, setCertainState}) {
             setCertainState('MerchantTagline', tagline);
             setCertainState('MerchantTiktokLink', tiktokLink);
             setCertainState('MerchantInstagramLink', instagramLink);
+            setCertainState('MerchantReference', reference)
+            setCertainState('MerchantPageViews', pageViews)
+            setCertainState('MerchantUsers', users)
+
+            navigate(`/${pageLink}/EditProfile`)
           }
         })
       }
@@ -69,7 +72,7 @@ function EditProfile({merchantDetails, setCertainState}) {
 
   return (
     <div className="Edit-profile">
-      <Nav/>
+      <Nav setCertainState={setCertainState} merchantDetails={merchantDetails}/>
       <div className='edit-top'>
         <div className="inner-top">
             <h1>Business Details</h1>

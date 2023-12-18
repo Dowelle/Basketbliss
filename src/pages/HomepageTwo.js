@@ -10,7 +10,7 @@ import Out from '../assets/out.png'
 import ProductCard from '../components/ProductCard';
 import Nav from '../components/Nav'
 import Footer from '../components/Footer';
-import {getMerchantDetails, signOutUser, getImageUrl} from '../services/firebaseActions'
+import { getMerchantDetails, signOutUser, getImageUrl } from '../services/firebaseActions'
 
 function HomepageTwo({setCertainState, merchantDetails}) {
   const [products, setProducts] = useState([])
@@ -94,7 +94,7 @@ function HomepageTwo({setCertainState, merchantDetails}) {
               </div>
             </div>
             <div className="product-container">
-              {products?.map(product => <ProductCard key={product.productName} product={product}/>) || 'No Items Found'}
+              {products?.length > 0 ? products?.map(product => <ProductCard key={product.productName} product={product}/>) : 'No Items Found'}
             </div>
           </div>
         </section>
