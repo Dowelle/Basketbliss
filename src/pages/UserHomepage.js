@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import ProductCard from '../components/ProductCard';
 import Footer from '../components/Footer';
 
-import { getImageUrl, logInUserWithEmailAndPassword, signOutUser, signUpUserWithEmailAndPassword } from "../services/firebaseActions";
+import { addPageVisits, addTotalUser, getImageUrl, logInUserWithEmailAndPassword, signOutUser, signUpUserWithEmailAndPassword } from "../services/firebaseActions";
 
 import Order from '../assets/cart.png'
 import Cart from '../assets/order.png'
@@ -67,12 +67,22 @@ const UserHomepage = ({merchantProducts, merchantDetails}) => {
   }
 
   const [products, setProducts] = useState([])
+  
+  useEffect(() => {
+    const currentLink = window.location.href
+    const currentRoute = currentLink.slice(currentLink.indexOf('dev') + 3)
     
+    if(currentRoute === '/stores/' + merchantDetails.pageLink) {
+      addPageVisits(merchantDetails.reference)
+    }
+  }, [window.location.href])
+
     useEffect(() => {
       if(sessionStorage.uid) {
         setIsAlreadyUser(true)
       }
     })
+
     useEffect(() => {
         const fetchData = async () => {
           if (merchantProducts) {
@@ -111,6 +121,8 @@ const UserHomepage = ({merchantProducts, merchantDetails}) => {
           if(response.uid) {
             setIsAlreadyUser(true)
           }
+
+          addTotalUser(merchantDetails.reference)
     
           if(!response.errorCode) {
             return;
@@ -150,10 +162,10 @@ const UserHomepage = ({merchantProducts, merchantDetails}) => {
                 {isAlreadyUser ? (
             <div className="top-bar-links">
               <input placeholder="Search items..." />
-              <Link className="link-container" to='/Cart'>
+              <Link className="link-container" to={window.location.href + '/Cart'}>
                 My cart<img src={Order} alt="Order Icon" />
               </Link>
-              <Link className="link-container">
+              <Link className="link-container" to={window.location.href + '/MyOrderUser'}>
                 My order<img src={Cart} alt="Cart Icon" />
               </Link>
               <button onClick={signOut} className="link-container">
@@ -222,7 +234,7 @@ const UserHomepage = ({merchantProducts, merchantDetails}) => {
                 <div className="product-container">
                 {products?.length > 0 ? (
                   products.map((product) => (
-                    <Link key={product.productName} to={`${window.location.href}/${product.productName}`}>
+                    <Link key={product.productName} to={`${window.location.href}/${product.id}`}>
                       <ProductCard product={product} />
                     </Link>
                   ))

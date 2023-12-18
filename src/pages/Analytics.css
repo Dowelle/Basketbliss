@@ -89,3 +89,15 @@ option{
 .date{
     width:50%;
 }
+
+.delete-order {
+    color: white;
+    background-color: red;
+    padding: 6px;
+}
+.delete-order:hover {
+    background-color: rgb(211, 0, 0);
+}
+.delete-order:focus {
+    background-color: rgb(146, 0, 0);
+}

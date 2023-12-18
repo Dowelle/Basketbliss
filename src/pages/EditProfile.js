@@ -10,6 +10,7 @@ import plant2 from '../assets/plant2.svg'
 
 function EditProfile({merchantDetails, setCertainState}) {
   const navigate = useNavigate()
+  const navigate = useNavigate()
   const handleMerchantNameChange = (e) => {
     setCertainState('MerchantName', e.target.value)
   }
@@ -48,7 +49,7 @@ function EditProfile({merchantDetails, setCertainState}) {
       if(response) {
         getMerchantDetails(merchantId).then(res => {
           if(res) {
-            const {address, reference, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = res.merchantDetails
+            const {address, users, pageViews, reference, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = res.merchantDetails
 
             setCertainState('MerchantAddress', address);
             setCertainState('MerchantEmail', email);
@@ -60,6 +61,8 @@ function EditProfile({merchantDetails, setCertainState}) {
             setCertainState('MerchantTiktokLink', tiktokLink);
             setCertainState('MerchantInstagramLink', instagramLink);
             setCertainState('MerchantReference', reference)
+            setCertainState('MerchantPageViews', pageViews)
+            setCertainState('MerchantUsers', users)
 
             navigate(`/${pageLink}/EditProfile`)
           }
@@ -70,7 +73,7 @@ function EditProfile({merchantDetails, setCertainState}) {
 
   return (
     <div className="Edit-profile">
-      <Nav/>
+      <Nav setCertainState={setCertainState} merchantDetails={merchantDetails}/>
       <div className='edit-top'>
         <div className="inner-top">
             <h1>Business Details</h1>

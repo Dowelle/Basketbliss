@@ -1,5 +1,6 @@
 import './CartTwo.css'
 
+import {useState} from 'react'
 import { Link } from 'react-router-dom'
 
 import namepage from '../assets/logobasket.png'
@@ -7,8 +8,23 @@ import arrow from '../assets/leftarrow.png'
 import Ellipse from '../assets/ellipse.png'
 import Ellipse1 from '../assets/ellipse01.png'
 import dress01 from '../assets/dress1.jpg'
+import { useEffect } from 'react'
+import { getUser } from '../services/firebaseActions'
 
-const CartTwo = () => {
+const CartTwo = ({merchantProducts}) => {
+  const [cart, setCart] = useState([])
+
+    useEffect(() => {
+      const userId = sessionStorage.uid;
+
+      getUser(userId).then(data => {
+        const {cart} = data
+        
+        setCart(cart)
+      })
+    }, [])
+
+    useEffect(() => console.log(cart), [cart])
     return (
         <header className='container_navbar'>
         <div className="first_imge">
@@ -17,7 +33,7 @@ const CartTwo = () => {
         </div>
           <div className='bow_shoppe'>
             <img className='bow' alt='' src={arrow}/>
-            <Link to='/stores/basketbliss'>
+            <Link to={window.location.href.slice(0, window.location.href.indexOf('/Cart'))}>
             <p>Continue Shopping</p>
             </Link>
             <div className='basket_fix'>
@@ -106,7 +122,7 @@ const CartTwo = () => {
   
   
       <div className='check_out_btn_two'>
-        <Link to="/Checkout">
+        <Link to={window.location.href.slice(0, window.location.href.indexOf('/Cart')) + '/Checkout'}>
         <p>Checkout</p>
         </Link>
       </div>
