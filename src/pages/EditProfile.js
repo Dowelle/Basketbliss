@@ -10,7 +10,6 @@ import plant2 from '../assets/plant2.svg'
 
 function EditProfile({merchantDetails, setCertainState}) {
   const navigate = useNavigate()
-  const navigate = useNavigate()
   const handleMerchantNameChange = (e) => {
     setCertainState('MerchantName', e.target.value)
   }
