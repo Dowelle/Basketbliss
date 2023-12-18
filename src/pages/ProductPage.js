@@ -28,6 +28,14 @@ function ProductPage({merchantName, product}) {
       return;
     }
 
+    if(product.productStock < 1) {
+      alert('No stock available');
+
+      return;
+    }
+
+    product.productStock -= 1;
+
     const userId = sessionStorage.uid
     const productId = product.id
     const quantity = 1
@@ -49,7 +57,7 @@ function ProductPage({merchantName, product}) {
   
     fetchImageUrls();
   }, [product]);
-
+  
   return (
     <div className="ProductPage">
       <div className="product-page-container">

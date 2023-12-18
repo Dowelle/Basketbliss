@@ -1,7 +1,7 @@
-import React from 'react';
+import {useEffect, useState} from 'react';
 import './EditProfile.css';
 
-import { getMerchantDetails, updateMerchantDetails } from '../services/firebaseActions';
+import { getImageUrl, getMerchantDetails, updateMerchantDetails } from '../services/firebaseActions';
 import Nav from '../components/Nav';
 import {Link, useNavigate} from 'react-router-dom';
 
@@ -9,6 +9,9 @@ import plant from '../assets/plant.svg'
 import plant2 from '../assets/plant2.svg'
 
 function EditProfile({merchantDetails, setCertainState}) {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [image, setImage] = useState(null)
+
   const navigate = useNavigate()
   const handleMerchantNameChange = (e) => {
     setCertainState('MerchantName', e.target.value)
@@ -43,12 +46,13 @@ function EditProfile({merchantDetails, setCertainState}) {
     });
 
     modifiedMerchantDetails.pageLink = modifiedMerchantDetails.name
+    modifiedMerchantDetails.qrCode = image;
 
     updateMerchantDetails(modifiedMerchantDetails, merchantId).then(response => {
       if(response) {
         getMerchantDetails(merchantId).then(res => {
           if(res) {
-            const {address, users, pageViews, reference, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = res.merchantDetails
+            const {address, qrCode, users, pageViews, reference, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = res.merchantDetails
 
             setCertainState('MerchantAddress', address);
             setCertainState('MerchantEmail', email);
@@ -62,6 +66,7 @@ function EditProfile({merchantDetails, setCertainState}) {
             setCertainState('MerchantReference', reference)
             setCertainState('MerchantPageViews', pageViews)
             setCertainState('MerchantUsers', users)
+            setCertainState('MerchantQrCode', qrCode)
 
             navigate(`/${pageLink}/EditProfile`)
           }
@@ -69,6 +74,31 @@ function EditProfile({merchantDetails, setCertainState}) {
       }
     })
   }
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setSelectedImage(imageUrl);
+      setImage(file)
+    }
+  };
+
+  const handleImageClick = () => {
+    // Trigger the file input when the label is clicked
+    document.getElementById('imageInput').click();
+  };
+
+  useEffect(() => {
+    if(merchantDetails.merchantQrCode) {
+      
+      getImageUrl(merchantDetails.merchantQrCode).then((res) => {
+        setSelectedImage(res)
+      })
+      // setSelectedImage(merchantDetails.merchantQrCode)
+    }
+  }, [merchantDetails])
 
   return (
     <div className="Edit-profile">
@@ -89,6 +119,36 @@ function EditProfile({merchantDetails, setCertainState}) {
             <input type="text" placeholder="Enter your company's Facebook link" value={merchantDetails.merchantFacebookLink} onChange={handleMerchantFacebookLinkChange}/>
             <input type="text" placeholder="Enter your company's Instagram link" value={merchantDetails.merchantInstagramLink} onChange={handleMerchantInstagramLinkChange}/>
             <input type="text" placeholder="Enter your company's Tiktok link" value={merchantDetails.merchantTiktokLink} onChange={handleMerchantTiktokLinkChange}/>
+            <div>
+      {/* Label connected to input */}
+      <label
+        id="imageLabel"
+        style={{
+          display: 'block',
+          width: '200px',
+          height: '200px',
+          border: '2px dashed #ccc',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          cursor: 'pointer',
+          backgroundImage: selectedImage ? `url(${selectedImage})` : 'none',
+        }}
+        onClick={handleImageClick}
+      >
+        {selectedImage ? null : 'Click to select a picture'}
+      </label>
+
+      {/* Input for selecting a picture */}
+      <input
+        type="file"
+        id="imageInput"
+        accept="image/*"
+        onChange={handleImageChange}
+        style={{ display: 'none' }}
+      />
+    </div>
+
           </div>
       </div>
 

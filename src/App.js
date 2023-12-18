@@ -42,6 +42,7 @@ function App() {
   const [merchantUsers, setMerchantUsers] = useState('')
   const [totalOrders, setTotalOrders] = useState('')
   const [merchantProducts, setMerchantProducts] = useState([])
+  const [merchantQrCode, setMerchantQrCode] = useState('')
 
   console.log(merchantPageLink);
 
@@ -81,13 +82,16 @@ function App() {
         setMerchantPageViews(data)
         break;
       case 'MerchantUsers':
-        setMerchantUsers(data)
+        setMerchantUsers(data);
+        break;
+      case 'MerchantQrCode':
+        setMerchantQrCode(data)
       default:
         console.log('Unknown State Case')
     }
   }
 
-  const merchantDetails = {merchantName, merchantUsers, merchantPageViews, merchantReference, merchantTagline, merchantNumber, merchantAddress, merchantEmail, merchantFacebookLink, merchantInstagramLink, merchantTiktokLink, merchantPageLink}
+  const merchantDetails = {merchantName, merchantQrCode, merchantUsers, merchantPageViews, merchantReference, merchantTagline, merchantNumber, merchantAddress, merchantEmail, merchantFacebookLink, merchantInstagramLink, merchantTiktokLink, merchantPageLink}
 
   useEffect(() => {
     const merchantId = sessionStorage.uid;
@@ -107,7 +111,7 @@ function App() {
     if(merchantId) {
       getMerchantDetails(merchantId).then(data => {
         if(data) {
-            const {address, users, pageViews, reference, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = data.merchantDetails
+            const {address, qrCode, users, pageViews, reference, email, facebookLink, instagramLink, name, number, pageLink, tagline, tiktokLink} = data.merchantDetails
             
             setMerchantName(name)
             setMerchantTagline(tagline)
@@ -121,6 +125,7 @@ function App() {
             setMerchantReference(reference)
             setMerchantPageViews(pageViews)
             setMerchantUsers(users)
+            setMerchantQrCode(qrCode)
 
             setTotalOrders(data.orders?.length)
             setMerchantProducts(data.products)
@@ -139,7 +144,6 @@ function App() {
           <Route path="/Landing" element={<LandingTwo setCertainState={setCertainState} merchantDetails={merchantDetails}/>} />
           <Route path="/Landing" element={<Landing />} />
           <Route path={merchantPageLink ? '/' + merchantPageLink + '/AddItem': undefined} element={ <AddItem setCertainState={setCertainState} merchantDetails={merchantDetails}/> }/>
-          {/* <Route path="/Cart" element={ <Cart/> }/> */}
           <Route path="/Signin" element={<Signin/>}/>
           <Route path="/EditProduct" element={<EditProduct/>}/>
           <Route path="/Login" element={<Registration/>} />
