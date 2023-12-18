@@ -94,7 +94,12 @@ function HomepageTwo({setCertainState, merchantDetails}) {
               </div>
             </div>
             <div className="product-container">
-              {products?.length > 0 ? products?.map(product => <ProductCard key={product.productName} product={product}/>) : 'No Items Found'}
+              {products?.length > 0 ? products?.map(product => (
+                <Link to={`/${merchantDetails.merchantPageLink}/${product.id}`}>
+                  <ProductCard key={product.productName} product={product}/>
+                </Link>
+              )) : 'No Items Found'
+              }
             </div>
           </div>
         </section>

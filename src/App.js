@@ -141,10 +141,19 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/Landing" element={<LandingTwo setCertainState={setCertainState} merchantDetails={merchantDetails}/>} />
+          <Route path="/" element={<LandingTwo setCertainState={setCertainState} merchantDetails={merchantDetails}/>} />
           <Route path="/Landing" element={<Landing />} />
           <Route path={merchantPageLink ? '/' + merchantPageLink + '/AddItem': undefined} element={ <AddItem setCertainState={setCertainState} merchantDetails={merchantDetails}/> }/>
           <Route path="/Signin" element={<Signin/>}/>
+          {
+            merchantProducts.map(product => (
+              <Route
+                  key={product.id} // Add a unique key for each route
+                  path={`/${merchantDetails.merchantPageLink}/${product.id}`}
+                  element={<EditProduct merchantPageLink={merchantDetails.merchantPageLink} product={product} />}
+                />
+            ))
+          }
           <Route path="/EditProduct" element={<EditProduct/>}/>
           <Route path="/Login" element={<Registration/>} />
           <Route path={"/Profile"} element={<Profile/>} />

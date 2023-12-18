@@ -520,6 +520,62 @@ export const addOrder = async (merchantReference, userId, orderDetails) => {
   }
 };
 
+export const editProduct = async (productId, newProduct, merchantId) => {
+  const merchantRef = doc(db, 'merchants', merchantId);
+
+  try {
+    // Get the merchant document
+    const merchantDoc = await getDoc(merchantRef);
+
+    if (merchantDoc.exists()) {
+      // Update the product details in the products array
+      const updatedProducts = merchantDoc.data().products.map(product => {
+        if (product.id === productId) {
+          return { ...newProduct };
+        } else {
+          return product;
+        }
+      });
+
+      console.log(updatedProducts);
+
+      // Update the merchant document with the modified products array
+      await updateDoc(merchantRef, { products: updatedProducts });
+      console.log('Product updated successfully');
+      return true;
+    } else {
+      console.log('Merchant document not found');
+    }
+  } catch (error) {
+    console.error('Error updating product:', error);
+  }
+};
+
+
+export const deleteProduct = async (productId, merchantId) => {
+  const merchantRef = doc(db, 'merchants', merchantId);
+
+  try {
+    // Get the merchant document
+    const merchantDoc = await getDoc(merchantRef);
+
+    if (merchantDoc.exists()) {
+      // Filter out the product to be deleted from the products array
+      const updatedProducts = merchantDoc.data().products.filter(product => {
+        return product.id !== productId;
+      });
+
+      // Update the merchant document with the modified products array
+      await updateDoc(merchantRef, { products: updatedProducts });
+      console.log('Product deleted successfully');
+      return true;
+    } else {
+      console.log('Merchant document not found');
+    }
+  } catch (error) {
+    console.error('Error deleting product:', error);
+  }
+};
 
 onAuthStateChanged(auth, (user) => {
   if(user) {
