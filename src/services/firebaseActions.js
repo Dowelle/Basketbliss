@@ -127,11 +127,19 @@ export const signOutUser = () => {
     return false;
   })
 }
-export const updateMerchantDetails = (merchantDetails, merchantId) => {
+export const updateMerchantDetails = async (merchantDetails, merchantId) => {
   const merchantRef = doc(db, "merchants", merchantId)
 
-  console.log(merchantDetails)
+  const randomName = generateRandomFileName() + '.png'; // Assuming you have a function to generate a random file name
+
+  const storageRef = ref(storage, `/files/${randomName}`);
+  const res = await uploadBytesResumable(storageRef, merchantDetails.qrCode);
   
+  // Get the download URL
+  const downloadURL = res.ref.fullPath
+  
+  merchantDetails.qrCode = downloadURL;
+
   return updateDoc(merchantRef, {merchantDetails: merchantDetails}).then((payload) => {
     console.log(payload)
     return true;
@@ -211,6 +219,14 @@ export const addMerchantProduct = async (product, pictures, merchantId) => {
 };
 
 export const getImageUrl = async (product) => {
+  if(typeof product === 'string') {
+    console.log(product);
+    const imageRef = await ref(storage, product)
+    const res = await getDownloadURL(imageRef)
+
+    return res
+  }
+
   const downloadPromises = await Promise.all(product.pictures.map(async (picture) => {
     const imageRef = ref(storage, picture);
     const res = await getDownloadURL(imageRef)
@@ -450,9 +466,32 @@ export const addOrder = async (merchantReference, userId, orderDetails) => {
         
       const modifiedOrderDetails = {...orderDetails, id, userId}
 
+      const merchantProducts = merchantDoc.data().products
+
+      const newMerchantProducts = merchantProducts.map((merchantProduct) => {
+        const matchingItem = modifiedOrderDetails.items.find(item => item.productId === merchantProduct.id);
+      
+        if (matchingItem) {
+          if(merchantProduct.productStock < matchingItem.quantity) {
+            return 'invalid'
+          }
+          const newProduct = { ...merchantProduct, productStock: merchantProduct.productStock - matchingItem.quantity };
+          console.log(newProduct);
+          return newProduct;
+        }
+      
+        // If no matching item is found, return the original product
+        return merchantProduct;
+      });
+
+      if(newMerchantProducts[0] === 'invalid') {
+        console.log('unsuccessful')
+        return 'unsuccessful'
+      }
+
       // Update merchant's order history
       const updatedMerchantOrders = arrayUnion(modifiedOrderDetails);
-      await updateDoc(merchantDoc.ref, { orders: updatedMerchantOrders });
+      await updateDoc(merchantDoc.ref, { orders: updatedMerchantOrders, products: newMerchantProducts });
 
       console.log('Merchant order history updated successfully.');
 
@@ -481,6 +520,62 @@ export const addOrder = async (merchantReference, userId, orderDetails) => {
   }
 };
 
+export const editProduct = async (productId, newProduct, merchantId) => {
+  const merchantRef = doc(db, 'merchants', merchantId);
+
+  try {
+    // Get the merchant document
+    const merchantDoc = await getDoc(merchantRef);
+
+    if (merchantDoc.exists()) {
+      // Update the product details in the products array
+      const updatedProducts = merchantDoc.data().products.map(product => {
+        if (product.id === productId) {
+          return { ...newProduct };
+        } else {
+          return product;
+        }
+      });
+
+      console.log(updatedProducts);
+
+      // Update the merchant document with the modified products array
+      await updateDoc(merchantRef, { products: updatedProducts });
+      console.log('Product updated successfully');
+      return true;
+    } else {
+      console.log('Merchant document not found');
+    }
+  } catch (error) {
+    console.error('Error updating product:', error);
+  }
+};
+
+
+export const deleteProduct = async (productId, merchantId) => {
+  const merchantRef = doc(db, 'merchants', merchantId);
+
+  try {
+    // Get the merchant document
+    const merchantDoc = await getDoc(merchantRef);
+
+    if (merchantDoc.exists()) {
+      // Filter out the product to be deleted from the products array
+      const updatedProducts = merchantDoc.data().products.filter(product => {
+        return product.id !== productId;
+      });
+
+      // Update the merchant document with the modified products array
+      await updateDoc(merchantRef, { products: updatedProducts });
+      console.log('Product deleted successfully');
+      return true;
+    } else {
+      console.log('Merchant document not found');
+    }
+  } catch (error) {
+    console.error('Error deleting product:', error);
+  }
+};
 
 onAuthStateChanged(auth, (user) => {
   if(user) {

@@ -15,6 +15,7 @@ import dress from '../assets/dress2.jpg'
 export const Checkout = ({merchantDetails, merchantProducts}) => {
   const [products, setProducts] = useState([])
   const [cart, setCart] = useState([])
+  const [imageSrc, setImageSrc] = useState('')
 
   const navigate = useNavigate()
 
@@ -100,6 +101,10 @@ export const Checkout = ({merchantDetails, merchantProducts}) => {
         alert('Fill out all details.')
         return
       }
+
+      if(!cart) {
+        return;
+      }
       
       const newItemDetails = cart.map((cartItem) => {
         const productDetails = getProductDetails(cartItem.productId);
@@ -118,7 +123,7 @@ export const Checkout = ({merchantDetails, merchantProducts}) => {
 
       const total = newItemDetails.reduce((total, item) => {
         console.log(item);
-        return total += item.totalPrice
+        return total += item?.totalPrice
       }, 0)
       
       // Create a new Date object
@@ -144,6 +149,16 @@ export const Checkout = ({merchantDetails, merchantProducts}) => {
         }
       })
     }
+
+    useEffect(() => {
+      if(merchantDetails.qrCode) {
+    
+        getImageUrl(merchantDetails.qrCode).then((res) => {
+          setImageSrc(res)
+        })
+        // setSelectedImage(merchantDetails.merchantQrCode)
+      }
+    }, [merchantDetails]);
   
   return (
     <div /*className='container_navbar'*/>
@@ -181,7 +196,7 @@ export const Checkout = ({merchantDetails, merchantProducts}) => {
             <input type='text' placeholder='GCASH REFERENCE NUMBER*' value={gcashReferenceNumber} onChange={handleGcashReferenceNumberChange}/>
           </div>
           <div className='payment_details-container'>
-            <img src={QRcode}/>
+            <img src={imageSrc}/>
           </div>
         </div>
         <div className='order_details'>
