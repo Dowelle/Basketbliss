@@ -20,6 +20,7 @@ import Analytics from './pages/Analytics';
 import MyOrderUser from './pages/MyOrdersUser';
 import UserHomepage from './pages/UserHomepage';
 import CartTwo from './pages/CartTwo';
+import EditProduct from './pages/EditProduct';
 
 
 import { addPageVisits, getAllMerchants, getMerchantDetails } from './services/firebaseActions';
@@ -135,11 +136,12 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<LandingTwo setCertainState={setCertainState} merchantDetails={merchantDetails}/>} />
+          <Route path="/Landing" element={<LandingTwo setCertainState={setCertainState} merchantDetails={merchantDetails}/>} />
           <Route path="/Landing" element={<Landing />} />
           <Route path={merchantPageLink ? '/' + merchantPageLink + '/AddItem': undefined} element={ <AddItem setCertainState={setCertainState} merchantDetails={merchantDetails}/> }/>
           {/* <Route path="/Cart" element={ <Cart/> }/> */}
           <Route path="/Signin" element={<Signin/>}/>
+          <Route path="/EditProduct" element={<EditProduct/>}/>
           <Route path="/Login" element={<Registration/>} />
           <Route path={"/Profile"} element={<Profile/>} />
           <Route path={merchantPageLink ? '/' + merchantPageLink : undefined} element={<HomepageTwo setCertainState={setCertainState} merchantDetails={merchantDetails} />}/>

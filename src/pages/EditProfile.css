@@ -58,6 +58,33 @@
     background-color: #474f7b;
     color:#fff;
 }
+.inner-top textarea{
+    width:100%;
+}
+.product-textarea{
+    border: solid 1px #474f7b;
+    border-radius: 20px;
+    padding: .5rem 1rem;
+}
+.edit-variety-container{
+    display: flex;
+    gap:.5rem;
+    flex-wrap: wrap;
+}
+.specific-variety{
+    display: flex;
+    align-items: center;
+    gap:1rem;
+    padding:.5rem 1rem;
+    border:solid 1px #474f7b;
+    border-radius: 10px;
+}
+.specific-variety button{
+    padding:.5rem 1rem;
+    background-color: #940000;
+    color:#fff;
+    border-radius: 10px;
+}
 @media(max-width:412px){
     .inner-bottom,
     .inner-top{
@@ -69,5 +96,8 @@
     .plantOne,
     .plantTwo{
         display: none;
+    }
+    .specific-variety{
+        gap:.25rem
     }
 }
