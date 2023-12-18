@@ -1,8 +1,12 @@
-import React from 'react'
+import React from 'react';
+import './EditProfile.css';
 
-import { getMerchantDetails, updateMerchantDetails } from '../services/firebaseActions'
-import Nav from '../components/Nav'
-import {Link} from 'react-router-dom'
+import { getMerchantDetails, updateMerchantDetails } from '../services/firebaseActions';
+import Nav from '../components/Nav';
+import {Link} from 'react-router-dom';
+
+import plant from '../assets/plant.svg'
+import plant2 from '../assets/plant2.svg'
 
 function EditProfile({merchantDetails, setCertainState}) {
   const handleMerchantNameChange = (e) => {
@@ -66,22 +70,33 @@ function EditProfile({merchantDetails, setCertainState}) {
   return (
     <div className="Edit-profile">
       <Nav/>
+      <div className='edit-top'>
+        <div className="inner-top">
+            <h1>Business Details</h1>
+            <input type="text" placeholder="Enter your merchant name" value={merchantDetails.merchantName} onChange={handleMerchantNameChange}/>
+            <input type="text" placeholder="Enter your comapny's Tagline" value={merchantDetails.merchantTagline} onChange={handleMerchantTaglineChange}/>
+            <input type="number" placeholder="Enter your company's contact number" value={merchantDetails.merchantNumber} onChange={handleMerchantNumberChange}/>
+            <input type="email" placeholder="Enter your company's email address" value={merchantDetails.merchantEmail} onChange={handleMerchantEmailChange}/>
+            <button onClick={submitMerchantDetails} className="saveprofile">Save</button>
+            <Link to={'/' + merchantDetails.merchantName}>gO Back</Link>
+        </div>
+
+          <div className='inner-bottom'>
+            <h1>Socials</h1>
+            <input type="text" placeholder="Enter your company's Facebook link" value={merchantDetails.merchantFacebookLink} onChange={handleMerchantFacebookLinkChange}/>
+            <input type="text" placeholder="Enter your company's Instagram link" value={merchantDetails.merchantInstagramLink} onChange={handleMerchantInstagramLinkChange}/>
+            <input type="text" placeholder="Enter your company's Tiktok link" value={merchantDetails.merchantTiktokLink} onChange={handleMerchantTiktokLinkChange}/>
+          </div>
+      </div>
 
 
+      <div className="edit-bottom">
+        <img className="plantOne" src={plant} />
+        <img className="plantTwo" src={plant2} />
 
-        <h1>Business Details</h1>
-        <input type="text" placeholder="Enter your merchant name" value={merchantDetails.merchantName} onChange={handleMerchantNameChange}/>
-        <input type="text" placeholder="Enter your comapny's Tagline" value={merchantDetails.merchantTagline} onChange={handleMerchantTaglineChange}/>
-        <input type="number" placeholder="Enter your company's contact number" value={merchantDetails.merchantNumber} onChange={handleMerchantNumberChange}/>
-        <input type="email" placeholder="Enter your company's email address" value={merchantDetails.merchantEmail} onChange={handleMerchantEmailChange}/>
+        {/* <img className="girl" src={ Profilepic} /> */}
 
-        <h1>Socials</h1>
-        <input type="text" placeholder="Enter your company's Facebook link" value={merchantDetails.merchantFacebookLink} onChange={handleMerchantFacebookLinkChange}/>
-        <input type="text" placeholder="Enter your company's Instagram link" value={merchantDetails.merchantInstagramLink} onChange={handleMerchantInstagramLinkChange}/>
-        <input type="text" placeholder="Enter your company's Tiktok link" value={merchantDetails.merchantTiktokLink} onChange={handleMerchantTiktokLinkChange}/>
-
-        <button onClick={submitMerchantDetails}>Save</button>
-        <Link to={'/' + merchantDetails.merchantName}>gO Back</Link>
+      </div>
         
     </div>
   )
