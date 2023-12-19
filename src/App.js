@@ -19,7 +19,7 @@ import AddItem from './pages/AddItem';
 import Analytics from './pages/Analytics';
 import MyOrderUser from './pages/MyOrdersUser';
 import UserHomepage from './pages/UserHomepage';
-import CartTwo from './pages/CartTwo';
+import CartFinal from './pages/CartFinal';
 import EditProduct from './pages/EditProduct';
 
 
@@ -141,7 +141,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<LandingTwo setCertainState={setCertainState} merchantDetails={merchantDetails}/>} />
+          <Route path="/Landing" element={<LandingTwo setCertainState={setCertainState} merchantDetails={merchantDetails}/>} />
           <Route path="/Landing" element={<Landing />} />
           <Route path={merchantPageLink ? '/' + merchantPageLink + '/AddItem': undefined} element={ <AddItem setCertainState={setCertainState} merchantDetails={merchantDetails}/> }/>
           <Route path="/Signin" element={<Signin/>}/>
@@ -156,6 +156,7 @@ function App() {
           }
           <Route path="/EditProduct" element={<EditProduct/>}/>
           <Route path="/Login" element={<Registration/>} />
+          <Route path="/" element={<CartFinal/>} />
           <Route path={"/Profile"} element={<Profile/>} />
           <Route path={merchantPageLink ? '/' + merchantPageLink : undefined} element={<HomepageTwo setCertainState={setCertainState} merchantDetails={merchantDetails} />}/>
           {
@@ -196,8 +197,8 @@ function App() {
             merchants ? merchants.filter(merchant => merchant.merchantDetails.pageLink !== undefined).map(merchant => (
               <Route
                 key={merchant.merchantDetails.pageLink} // Add a unique key for each route
-                path={`/stores/${merchant.merchantDetails.pageLink}/Cart`}
-                element={<CartTwo merchantProducts={merchant.products} />}
+                // path={`/stores/${merchant.merchantDetails.pageLink}/Cart`}
+                // element={<Cart merchantProducts={merchant.products} />}
               />
             ))
             : null // Handle the case when merchants is falsy (e.g., not yet loaded)
